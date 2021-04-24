@@ -93,6 +93,7 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 {
+
                     editingStatus ? <select
                         className='table-select' onBlur={handleStatusEdit}
                         autoFocus={true} defaultValue={status}

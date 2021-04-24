@@ -1,7 +1,7 @@
 @use 'node_modules/wt-frontend/build/global/theme' with (
     $primary-color: #ffc800,
-    $background-color: rgb(64, 69, 78),//#d9d6cc,
-    $navbar-background-color: #353a44,//rgb(64, 69, 78),
+    $background-color: #282828,//#d9d6cc,
+    $navbar-background-color: #000000,//rgb(64, 69, 78),
     $sidebar-background-color: #2b2e36,//#353a44,
     $text-color: #e9edf0,
     $modal-background: rgb(64, 69, 78),
@@ -98,7 +98,7 @@ html, body {
 }
 
 .logo {
-	color: $primary-color;
+	color: #f56728;
     font-size: 1.5rem;
     font-family: "Roboto Mono", monospace;
     text-transform: uppercase;
@@ -204,11 +204,13 @@ html, body {
     border: none;
     background-color: var(--deep-blue-lighter);
     color: var(--light-gray);
+
 }
 
 .modal-header {
     color: $text-color;
-    font-size: 28px;
+    font-size: 20px;
+    text-align: center;
 }
 
 .navbar-options {
@@ -231,4 +233,14 @@ html, body {
 .table-entry-buttons-disabled {
     color: var(--warm-black);
     cursor: default;
+}
+
+.centerGlobe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    text-align: center;
+    color: white;
+    font-size: 50px;
 }
