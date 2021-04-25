@@ -10,18 +10,31 @@ const LoggedIn = (props) => {
     const handleLogout = async (e) => {
         Logout();
         const { data } = await props.fetchUser();
+        console.log(data.getCurrentUser.firstName)
         if (data) {
             let reset = await client.resetStore();
             if (reset) props.setActiveList({});
         }
     };
 
+    const username= "asd"
     return (
-        <WNavItem hoverAnimation="lighten">
-            <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
-                Logout
-            </WButton>
-        </WNavItem >
+        <>
+
+            <WNavItem hoverAnimation="lighten">
+                <WButton className="navbar-options" style={{color:"orange"}} onClick={props.setShowCreate} wType="texted" hoverAnimation="text-primary">
+                    {(username)}
+                </WButton>
+            </WNavItem>
+
+            <WNavItem hoverAnimation="lighten">
+                <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
+                    Logout
+                </WButton>
+            </WNavItem >
+        </>
+
+
     );
 };
 
