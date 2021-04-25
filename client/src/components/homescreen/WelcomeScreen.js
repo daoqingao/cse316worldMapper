@@ -17,7 +17,7 @@ import { UpdateListField_Transaction,
     ReorderItems_Transaction,
     EditItem_Transaction } 				from '../../utils/jsTPS';
 
-
+import MapScreen from "./MapScreen";
 import globe from "../icons/logo512.png"
 
 const WelcomeScreen = (props) => {
@@ -256,19 +256,15 @@ const WelcomeScreen = (props) => {
 
             <WLMain>
                 {
-                    !auth?
-                    <div className="centerGlobe">
-                    <img
-                        src={globe} ></img>
-                    Welcome To The World Data Mapper
-                    </div>
-                        :
+                    // !auth?
+                    // <div className="centerGlobe">
+                    // <img
+                    //     src={globe} ></img>
+                    // Welcome To The World Data Mapper
+                    // </div>
+                    //     :
 
-                        <div className="centerGlobe">
-                            <img
-                                src={globe} ></img>
-                            Your Maps
-                        </div>
+                <MapScreen/>
 
                 }
 
