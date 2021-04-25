@@ -6,14 +6,11 @@ const userSchema = new Schema(
 			type: ObjectId,
 			required: true
 		},
-		firstName: {
+		name: {
 			type: String,
 			required: true
 		},
-		lastName: {
-			type: String,
-			required: true
-		},
+
 		initials: {
 			type: String,
 			required: true

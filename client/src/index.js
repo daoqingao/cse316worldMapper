@@ -43,6 +43,7 @@ const client = new ApolloClient({
 	// Credentials: include is necessary to pass along the auth cookies with each server request
 	credentials: 'include',
 	cache: cache,
+
 });
 
 
@@ -51,7 +52,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ApolloProvider client={client}>
+		<ApolloProvider client={client} >
 	    	<App />
 		</ApolloProvider>
   	</React.StrictMode>,

@@ -256,13 +256,13 @@ const WelcomeScreen = (props) => {
 
             <WLMain>
                 {
-                    // !auth?
-                    // <div className="centerGlobe">
-                    // <img
-                    //     src={globe} ></img>
-                    // Welcome To The World Data Mapper
-                    // </div>
-                    //     :
+                    !auth?
+                    <div className="centerGlobe">
+                    <img
+                        src={globe} ></img>
+                    Welcome To The World Data Mapper
+                    </div>
+                        :
 
                 <MapScreen/>
 
