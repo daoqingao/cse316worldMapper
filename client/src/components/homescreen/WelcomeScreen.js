@@ -235,6 +235,23 @@ const WelcomeScreen = (props) => {
 
     }
 
+
+    const createNewMapRegion = async () => {
+        let list = {
+            _id: '',
+            name: 'Untitled',
+            owner: props.user._id,
+            items: [],
+            sortRule: 'task',
+            sortDirection: 1
+        }
+        const {data} = await AddTodolist({variables: {todolist: list}, refetchQueries: [{query: GET_DB_TODOS}]});
+        if (data) {
+            loadTodoList(data.addTodolist);
+        }
+    }
+
+
     return (
         <WLayout wLayout="header-lside-rside">
             <WLHeader>
@@ -263,8 +280,23 @@ const WelcomeScreen = (props) => {
                     Welcome To The World Data Mapper
                     </div>
                         :
+<>
+    <WSidebar>
+        {
+            activeList ?
+                <SidebarContents
+                    listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
+                    handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
+                    updateListField={updateListField} 	key={activeList._id}
+                />
+                :
+                <></>
+        }
+    </WSidebar>
 
-                <MapScreen/>
+    <MapScreen/>
+</>
+
 
                 }
 
