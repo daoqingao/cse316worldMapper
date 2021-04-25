@@ -26,6 +26,7 @@ const Login = (props) => {
 			return;
 		}
 		if (data) {
+
 			props.fetchUser();
 			props.reloadTodos();
 			toggleLoading(false)
