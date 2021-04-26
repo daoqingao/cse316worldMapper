@@ -6,7 +6,7 @@ import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import * as mutations 					from '../../cache/mutations';
 import SidebarContents 					from '../sidebar/SidebarContents';
-import { GET_DB_TODOS } 				from '../../cache/queries';
+import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
@@ -37,7 +37,7 @@ const WelcomeScreen = (props) => {
     document.onkeydown = keyCombination;
 
     const auth = props.user === null ? false : true;
-    let todolists 	= [];
+    let regions 	= [];
     let SidebarData = [];
     const [sortRule, setSortRule] = useState('unsorted'); // 1 is ascending, -1 desc
     const [activeList, setActiveList] 		= useState({});
@@ -47,23 +47,23 @@ const WelcomeScreen = (props) => {
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
     const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
 
-    const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
+    const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
 
     if(loading) { console.log(loading, 'loading'); }
     if(error) { console.log(error, 'error'); }
     if(data) {
-        // Assign todolists
-        for(let todo of data.getAllTodos) {
-            todolists.push(todo)
+        // Assign regions
+        for(let region of data.getAllRegions) {
+            regions.push(region)
         }
-        // if a list is selected, shift it to front of todolists
+        // if a list is selected, shift it to front of regions
         if(activeList._id) {
-            let selectedListIndex = todolists.findIndex(entry => entry._id === activeList._id);
-            let removed = todolists.splice(selectedListIndex, 1);
-            todolists.unshift(removed[0]);
+            let selectedListIndex = regions.findIndex(entry => entry._id === activeList._id);
+            let removed = regions.splice(selectedListIndex, 1);
+            regions.unshift(removed[0]);
         }
         // create data for sidebar links
-        for(let todo of todolists) {
+        for(let todo of regions) {
             if(todo) {
                 SidebarData.push({_id: todo._id, name: todo.name});
             }
@@ -76,12 +76,12 @@ const WelcomeScreen = (props) => {
     const reloadList = async () => {
         if (activeList._id) {
             let tempID = activeList._id;
-            let list = todolists.find(list => list._id === tempID);
+            let list = regions.find(list => list._id === tempID);
             setActiveList(list);
         }
     }
 
-    const loadTodoList = (list) => {
+    const loadRegion = (list) => {
         props.tps.clearAllTransactions();
         setCanUndo(props.tps.hasTransactionToUndo());
         setCanRedo(props.tps.hasTransactionToRedo());
@@ -90,7 +90,7 @@ const WelcomeScreen = (props) => {
     }
 
     const mutationOptions = {
-        refetchQueries: [{ query: GET_DB_TODOS }],
+        refetchQueries: [{ query: GET_DB_REGIONS }],
         awaitRefetchQueries: true,
         onCompleted: () => reloadList()
     }
@@ -98,12 +98,12 @@ const WelcomeScreen = (props) => {
     const [ReorderTodoItems] 		= useMutation(mutations.REORDER_ITEMS, mutationOptions);
     const [sortTodoItems] 		= useMutation(mutations.SORT_ITEMS, mutationOptions);
     const [UpdateTodoItemField] 	= useMutation(mutations.UPDATE_ITEM_FIELD, mutationOptions);
-    const [UpdateTodolistField] 	= useMutation(mutations.UPDATE_TODOLIST_FIELD, mutationOptions);
+
     const [DeleteTodoItem] 			= useMutation(mutations.DELETE_ITEM, mutationOptions);
     const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM, mutationOptions);
-    const [AddTodolist] 			= useMutation(mutations.ADD_TODOLIST);
-    const [DeleteTodolist] 			= useMutation(mutations.DELETE_TODOLIST);
-
+    const [AddRegion] 			= useMutation(mutations.ADD_REGION);
+    const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION);
+    const [UpdateRegionsField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -140,71 +140,22 @@ const WelcomeScreen = (props) => {
         tpsRedo();
     };
 
-    const deleteItem = async (item, index) => {
-        let listID = activeList._id;
-        let itemID = item._id;
-        let opcode = 0;
-        let itemToDelete = {
-            _id: item._id,
-            description: item.description,
-            due_date: item.due_date,
-            assigned_to: item.assigned_to,
-            completed: item.completed
-        }
-        let transaction = new UpdateListItems_Transaction(listID, itemID, itemToDelete, opcode, AddTodoItem, DeleteTodoItem, index);
-        props.tps.addTransaction(transaction);
-        tpsRedo();
 
-    };
-
-    const editItem = async (itemID, field, value, prev) => {
-        let flag = 0;
-        if (field === 'completed') flag = 1;
-        let listID = activeList._id;
-        let transaction = new EditItem_Transaction(listID, itemID, field, prev, value, flag, UpdateTodoItemField);
-        props.tps.addTransaction(transaction);
-        tpsRedo();
-
-    };
-
-    const reorderItem = async (itemID, dir) => {
-        let listID = activeList._id;
-        let transaction = new ReorderItems_Transaction(listID, itemID, dir, ReorderTodoItems);
-        props.tps.addTransaction(transaction);
-        tpsRedo();
-
-    };
-
-    const createNewList = async () => {
-        let list = {
-            _id: '',
-            name: 'Untitled',
-            owner: props.user._id,
-            items: [],
-            sortRule: 'task',
-            sortDirection: 1
-        }
-        const { data } = await AddTodolist({ variables: { todolist: list }, refetchQueries: [{ query: GET_DB_TODOS }] });
-        if(data) {
-            loadTodoList(data.addTodolist);
-        }
-
-    };
     const deleteList = async (_id) => {
-        DeleteTodolist({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_TODOS }] });
-        loadTodoList({});
+        DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+        loadRegion({});
     };
 
     const updateListField = async (_id, field, value, prev) => {
-        let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateTodolistField);
+        let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsField);
         props.tps.addTransaction(transaction);
         tpsRedo();
 
     };
 
     const handleSetActive = (_id) => {
-        const selectedList = todolists.find(todo => todo._id === _id);
-        loadTodoList(selectedList);
+        const selectedList = regions.find(region => region._id === _id);
+        loadRegion(selectedList);
     };
 
     const setShowLogin = () => {
@@ -237,7 +188,10 @@ const WelcomeScreen = (props) => {
 
 
     const createNewMapRegion = async () => {
-        let list = {
+        console.log("NAH ADD")
+
+
+        let region = {
             _id: '',
             name: 'Untitled',
             owner: props.user._id,
@@ -245,10 +199,19 @@ const WelcomeScreen = (props) => {
             sortRule: 'task',
             sortDirection: 1
         }
-        const {data} = await AddTodolist({variables: {todolist: list}, refetchQueries: [{query: GET_DB_TODOS}]});
+        console.log(region)
+        console.log(regions)
+        const {data} = await AddRegion({variables: {region: region}, refetchQueries: [{query: GET_DB_REGIONS}]});
+
+
+
+
+
         if (data) {
-            loadTodoList(data.addTodolist);
+            loadRegion(data.addRegion);
         }
+
+        console.log("FINISH ADD")
     }
 
 
@@ -265,7 +228,7 @@ const WelcomeScreen = (props) => {
                         <NavbarOptions
                             fetchUser={props.fetchUser} 	auth={auth}
                             setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
-                            reloadTodos={refetch} 			setActiveList={loadTodoList}
+                            reloadTodos={refetch} 			setActiveList={loadRegion}
                         />
                     </ul>
                 </WNavbar>

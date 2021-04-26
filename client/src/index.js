@@ -3,7 +3,8 @@ import './css/layout.scss';
 import React 	from 'react';
 import ReactDOM from 'react-dom';
 import App 		from './App';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import {ApolloProvider, ApolloClient, InMemoryCache, HttpLink, from,} from '@apollo/client';
+import {onError} from "@apollo/client/link/error";
 const cache = new InMemoryCache({
 
 	/*
@@ -13,7 +14,7 @@ const cache = new InMemoryCache({
 	*/
 	dataIdFromObject: object => `${object.__typename}:${object._id}`,
 	typePolicies: {
-		Todolist: {
+		Region: {
 			fields: {
 				items: {
 					merge(existing, incoming){
@@ -24,7 +25,7 @@ const cache = new InMemoryCache({
 		},
 		Query: {
 			fields: {
-				getAllTodos: {
+				getAllRegions: {
 					merge(existing, incoming){
 						return incoming
 					}
@@ -37,6 +38,20 @@ const cache = new InMemoryCache({
 // bad hardcoding, localhost port should match port in the backend's .env file
 const BACKEND_LOCATION = 'http://localhost:4000/graphql';
 
+
+// const errorLink = onError(({ graphqlErrors, networkError }) => {
+// 	if (graphqlErrors) {
+// 		graphqlErrors.map(({ message, location, path }) => {
+// 			alert(`Graphql error ${message}`);
+// 		});
+// 	}
+// });
+//
+// const link = from([
+// 	errorLink,
+// 	new HttpLink({ uri: "http://localhost:4000/graphql" }),
+// ]);
+
 const client = new ApolloClient({
 	uri: BACKEND_LOCATION,
 	connectToDevTools: true,
@@ -44,7 +59,11 @@ const client = new ApolloClient({
 	credentials: 'include',
 	cache: cache,
 
+
+
 });
+
+
 
 
 

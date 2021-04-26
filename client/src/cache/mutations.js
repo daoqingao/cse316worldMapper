@@ -82,9 +82,10 @@ export const SORT_ITEMS = gql`
 	}
 `;
 
-export const ADD_TODOLIST = gql`
-	mutation AddTodolist($todolist: TodoInput!) {
-		addTodolist(todolist: $todolist) {
+
+export const ADD_REGION = gql`
+	mutation AddRegion($region: RegionInput!) {
+		addRegion(region: $region) {
 			_id
 			name
 			owner
@@ -101,14 +102,44 @@ export const ADD_TODOLIST = gql`
 	}
 `;
 
-export const DELETE_TODOLIST = gql`
-	mutation DeleteTodolist($_id: String!) {
-		deleteTodolist(_id: $_id)
+export const DELETE_REGION = gql`
+	mutation DeleteRegion($_id: String!) {
+		deleteRegion(_id: $_id)
 	}
 `;
 
-export const UPDATE_TODOLIST_FIELD = gql`
-	mutation UpdateTodolistField($_id: String!, $field: String!, $value: String!) {
-		updateTodolistField(_id: $_id, field: $field, value: $value)
+export const UPDATE_REGION_FIELD = gql`
+	mutation UpdateRegionField($_id: String!, $field: String!, $value: String!) {
+		updateRegionField(_id: $_id, field: $field, value: $value)
 	}
 `;
+
+
+
+// export const ADD_REGION = gql`
+// // 	mutation AddTodolist($region: TodoInput!) {
+// // 		addRegion(region: $region) {
+// // 			_id
+// // 			name
+// // 			owner
+// // 			items
+// // 			 {
+// // 				_id
+// // 				description
+// // 				due_date
+// // 				assigned_to
+// // 				completed
+// // 			}
+// // 			capital
+// // 			leader
+// // 			flag
+// // 			landmarks
+// // 			parentRegion
+// // 			subregionNumber
+// // 			regionLandmark
+// // 			subregions
+// //
+// //
+// // 		}
+// // 	}
+// // `;

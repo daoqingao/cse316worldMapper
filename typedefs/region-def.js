@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 
 const typeDefs = gql `
-	type Todolist {
+	type Region {
 		_id: String!
 		name: String!
 		owner: String!
@@ -18,15 +18,15 @@ const typeDefs = gql `
 		completed:  Boolean!
 	}
 	extend type Query {
-		getAllTodos: [Todolist]
-		getTodoById(_id: String!): Todolist 
+		getAllRegions: [Region]
+		getRegionById(_id: String!): Region 
 	}
 	extend type Mutation {
 		addItem(item: ItemInput!, _id: String!, index: Int!): String
-		addTodolist(todolist: TodoInput!): Todolist
+		addRegion(region: RegionInput!): Region
 		deleteItem(itemId: String!, _id: String!): [Item]		
-		deleteTodolist(_id: String!): Boolean
-		updateTodolistField(_id: String!, field: String!, value: String!): String
+		deleteRegion(_id: String!): Boolean
+		updateRegionField(_id: String!, field: String!, value: String!): String
 		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]
 		reorderItems(itemId: String!, _id: String!, direction: Int!): [Item]
 		sortItems(_id: String!, criteria: String!): [Item]
@@ -36,7 +36,7 @@ const typeDefs = gql `
 		field: String
 		value: String
 	}
-	input TodoInput {
+	input RegionInput {
 		_id: String
 		name: String
 		owner: String
