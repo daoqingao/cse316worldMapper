@@ -197,7 +197,18 @@ const WelcomeScreen = (props) => {
             owner: props.user._id,
             items: [],
             sortRule: 'task',
-            sortDirection: 1
+            sortDirection: 1,
+
+            capital: "none1",
+            leader: "none",
+            flag: "none",
+            landmark: "none",
+            parentRegion: "none",
+            subregionNumber: 0,
+            regionLandmark: ["none"],
+            subregionsID: [],
+            isRoot: true
+
         }
         console.log(region)
         console.log(regions)

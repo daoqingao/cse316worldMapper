@@ -64,7 +64,7 @@ module.exports = {
 
 			const { region: region } = args;
 			const objectId = new ObjectId();
-			const { id, name, owner, items , sortRule, sortDirection} = region;
+			const { id, name, owner, items , sortRule, sortDirection,capital,leader,flag,landmark,parentRegion,subregionNumber,regionLandmark,subregionsID,isRoot} = region;
 			const newList = new Region({
 				_id: objectId,
 				name: name,
@@ -72,6 +72,16 @@ module.exports = {
 				items: items,
 				sortRule: sortRule,
 				sortDirection: sortDirection,
+
+				capital:capital,
+				leader: leader,
+				flag: flag,
+				landmark: landmark,
+				parentRegion: parentRegion,
+				subregionNumber: subregionNumber,
+				regionLandmark: regionLandmark,
+				subregionsID:subregionsID,
+				isRoot: isRoot
 			});
 			const updated = await newList.save();
 			if(updated) {

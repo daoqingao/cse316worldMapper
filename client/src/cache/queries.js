@@ -25,6 +25,16 @@ export const GET_DB_REGIONS = gql`
 			}
 			sortRule
 			sortDirection
+			
+			capital
+            leader
+            flag
+            landmark
+            parentRegion
+            subregionNumber
+            regionLandmark
+            subregionsID
+            isRoot
 		}
 	}
 `;

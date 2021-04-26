@@ -9,6 +9,16 @@ const typeDefs = gql `
 		items: [Item]
 		sortRule: String!
 		sortDirection: Int!
+		
+		    capital:String
+            leader:String
+            flag:String
+            landmark:String
+            parentRegion:String
+            subregionNumber:Int
+            regionLandmark:[String]
+            subregionsID:[String]
+            isRoot:Boolean
 	}
 	type Item {
 		_id: String!
@@ -43,6 +53,16 @@ const typeDefs = gql `
 		items: [ItemInput]
 		sortRule: String
 		sortDirection: Int
+		
+				    capital:String
+            leader:String
+            flag:String
+            landmark:String
+            parentRegion:String
+            subregionNumber:Int
+            regionLandmark:[String]
+            subregionsID:[String]
+            isRoot:Boolean
 	}
 	input ItemInput {
 		_id: String
