@@ -33,6 +33,8 @@ export const GET_DB_REGIONS = gql`
             parentRegion
             subregionNumber
             regionLandmark
+            
+            parentRegionID
             subregionsID
             isRoot
 		}

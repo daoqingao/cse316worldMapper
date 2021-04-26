@@ -59,6 +59,11 @@ const regionSchema = new Schema(
 			required: true
 		},
 
+		parentRegionID: {
+			type: ObjectId,
+			required: true
+		},
+
 		regionLandmark: [String],
 		subregionsID:[ObjectId],
 

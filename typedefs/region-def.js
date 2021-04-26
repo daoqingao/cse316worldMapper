@@ -17,6 +17,8 @@ const typeDefs = gql `
             parentRegion:String
             subregionNumber:Int
             regionLandmark:[String]
+            
+            parentRegionID:String
             subregionsID:[String]
             isRoot:Boolean
 	}
@@ -61,6 +63,8 @@ const typeDefs = gql `
             parentRegion:String
             subregionNumber:Int
             regionLandmark:[String]
+            
+            parentRegionID:String
             subregionsID:[String]
             isRoot:Boolean
 	}

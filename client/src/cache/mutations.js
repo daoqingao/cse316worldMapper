@@ -107,6 +107,8 @@ export const ADD_REGION = gql`
             parentRegion
             subregionNumber
             regionLandmark
+            
+            parentRegionID
             subregionsID
             isRoot
 		}

@@ -64,7 +64,9 @@ module.exports = {
 
 			const { region: region } = args;
 			const objectId = new ObjectId();
-			const { id, name, owner, items , sortRule, sortDirection,capital,leader,flag,landmark,parentRegion,subregionNumber,regionLandmark,subregionsID,isRoot} = region;
+
+			const parentRegionPlaceholder = new ObjectId();
+			const { id, name, owner, items , sortRule, sortDirection,capital,leader,flag,landmark,parentRegion,subregionNumber,parentRegionID,regionLandmark,subregionsID,isRoot} = region;
 			const newList = new Region({
 				_id: objectId,
 				name: name,
@@ -80,6 +82,8 @@ module.exports = {
 				parentRegion: parentRegion,
 				subregionNumber: subregionNumber,
 				regionLandmark: regionLandmark,
+
+				parentRegionID: parentRegionPlaceholder,
 				subregionsID:subregionsID,
 				isRoot: isRoot
 			});

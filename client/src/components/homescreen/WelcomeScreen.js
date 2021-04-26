@@ -206,6 +206,8 @@ const WelcomeScreen = (props) => {
             parentRegion: "none",
             subregionNumber: 0,
             regionLandmark: ["none"],
+
+            parentRegionID: '',
             subregionsID: [],
             isRoot: true
 
