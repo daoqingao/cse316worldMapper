@@ -227,8 +227,7 @@ const WelcomeScreen = (props) => {
             isRoot: true
 
         }
-        console.log(region)
-        console.log(regions)
+
         const {data} = await AddRegion({variables: {region: region}, refetchQueries: [{query: GET_DB_REGIONS}]});
 
 
@@ -242,12 +241,16 @@ const WelcomeScreen = (props) => {
         console.log("FINISH ADD")
     }
 
-    let userName="nothingHere"
+
 
     const userNameSet = async (name) => {
         setUsername(name)
     }
 
+
+    const deleteMapRegion=async (_id) => {
+        console.log("start delete")
+    }
 
     return (
         <WLayout wLayout="header-lside-rside">
@@ -281,20 +284,23 @@ const WelcomeScreen = (props) => {
                     </div>
                         :
             <>
-                <WSidebar>
-                    {
-                        activeList ?
-                            <SidebarContents
-                                listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
-                                handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
-                                updateListField={updateListField} 	key={activeList._id}
-                            />
-                            :
-                            <></>
-                    }
-                </WSidebar>
+                {/*<WSidebar>*/}
+                {/*    {*/}
+                {/*        <SidebarContents*/}
+                {/*            listIDs={SidebarData} 				activeid={activeList._id} auth={auth}*/}
+                {/*            handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}*/}
+                {/*            updateListField={updateListField} 	key={activeList._id}*/}
+                {/*        />*/}
+                {/*    }*/}
+                {/*</WSidebar>*/}
 
-                <MapScreen/>
+                <MapScreen
+                    listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
+                    handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
+                    updateListField={updateListField} 	key={activeList._id}
+                    createNewMapRegion={createNewMapRegion}
+                    deleteMapRegion={(_id) => (deleteMapRegion(_id))}
+                />
             </>
 
 

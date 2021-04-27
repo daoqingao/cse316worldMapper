@@ -6,11 +6,13 @@ import {WModal, WMHeader, WMMain, WMFooter, WButton, WInput, WRow, WCol} from 'w
 
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import globe from "../icons/logo512.png";
+import SidebarContents from "../sidebar/SidebarContents";
+import SidebarEntry from "../sidebar/SidebarEntry";
 
 const MapScreen = (props) => {
 
     return (
-        <WLayout wLayout="header-lside-rside" style={{color:"white"}}>
+        <WLayout wLayout="header" style={{color:"white"}}>
             <WLHeader>
 
             </WLHeader>
@@ -21,11 +23,16 @@ const MapScreen = (props) => {
                     Your Maps
                 </WRow>
                 <WRow>
-                    _______________________________________________________________________
+                    ________________________________________________________________________________________________
                 </WRow>
-                <WRow size="6">
+                <WRow size="16">
                     <WCol size="6">
-                        Put list here@@@@@@@@@
+                        <SidebarContents
+                            listIDs={props.listIDs} 				activeid={props.activeid} auth={props.auth}
+                            handleSetActive={props.handleSetActive} 	createNewList={props.createNewList}
+                            updateListField={props.updateListField} 	key={props.key}
+                            deleteMapRegion={(_id) => (props.deleteMapRegion(_id))}
+                        />
                     </WCol>
                     <WCol size="6">
                         <WRow size="6">
@@ -36,7 +43,7 @@ const MapScreen = (props) => {
                         </WRow>
                         <WRow size="6">
 
-                                <WButton>Add new Map</WButton>
+                                <WButton  onClick={props.createNewList} >Add new Map</WButton>
                         </WRow>
                     </WCol>
                 </WRow>

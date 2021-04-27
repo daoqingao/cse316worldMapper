@@ -1,5 +1,7 @@
 import React, { useState }  from 'react';
 import { WNavItem, WInput } from 'wt-frontend';
+import * as ALl from 'wt-frontend';
+import {WModal, WMHeader, WMMain, WMFooter, WButton, WRow, WCol} from 'wt-frontend';
 
 const SidebarEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
@@ -19,7 +21,7 @@ const SidebarEntry = (props) => {
     const entryStyle = props._id === props.activeid ? 'list-item-active' : 'list-item ';
     
     return (
-        <WNavItem 
+        <WNavItem
             className={entryStyle} onDoubleClick={handleEditing} 
             onClick={() => { props.handleSetActive(props._id) }} 
         >
@@ -28,11 +30,18 @@ const SidebarEntry = (props) => {
                                 onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
                                 name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
                             />
-                        :   <div className='list-text'>
-                                {props.name}
-                            </div>
+                        :
+                    <div>
+                        <div className='list-text'>
+                            {props.name}
+                            <WButton className='mapDeleteButton' onClick={() => props.deleteMapRegion(props._id)}>
+                                <i className="material-icons mapDeleteButton">delete</i>
+                            </WButton>
+                        </div>
+                    </div>
+
             }
-        </WNavItem>
+        </WNavItem >
     );
 };
 
