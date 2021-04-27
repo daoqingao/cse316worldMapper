@@ -3,7 +3,7 @@ import { WNavItem, WInput } from 'wt-frontend';
 import * as ALl from 'wt-frontend';
 import {WModal, WMHeader, WMMain, WMFooter, WButton, WRow, WCol} from 'wt-frontend';
 
-const SidebarEntry = (props) => {
+const MapRegionEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
     const [preEdit, setPreEdit] = useState(props.name);
     const handleEditing = (e) => {
@@ -45,4 +45,4 @@ const SidebarEntry = (props) => {
     );
 };
 
-export default SidebarEntry;
+export default MapRegionEntry;

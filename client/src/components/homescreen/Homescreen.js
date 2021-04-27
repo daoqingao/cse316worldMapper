@@ -5,7 +5,7 @@
 // import CreateAccount 					from '../modals/CreateAccount';
 // import NavbarOptions 					from '../navbar/NavbarOptions';
 // import * as mutations 					from '../../cache/mutations';
-// import SidebarContents 					from '../sidebar/SidebarContents';
+// import MapRegionContents 					from '../mapRegion/MapRegionContents';
 // import { GET_DB_REGIONS } 				from '../../cache/queries';
 // import React, { useState } 				from 'react';
 // import { useMutation, useQuery } 		from '@apollo/client';
@@ -59,7 +59,7 @@
 // 			let removed = todolists.splice(selectedListIndex, 1);
 // 			todolists.unshift(removed[0]);
 // 		}
-// 		// create data for sidebar links
+// 		// create data for mapRegion links
 // 		for(let todo of todolists) {
 // 			if(todo) {
 // 				SidebarData.push({_id: todo._id, name: todo.name});
@@ -255,7 +255,7 @@
 // 				<WSidebar>
 // 					{
 // 						activeList ?
-// 							<SidebarContents
+// 							<MapRegionContents
 // 								listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
 // 								handleSetActive={handleSetActive} 	createNewList={createNewList}
 // 								updateListField={updateListField} 	key={activeList._id}

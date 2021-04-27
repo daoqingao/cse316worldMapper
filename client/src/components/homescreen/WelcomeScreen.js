@@ -7,7 +7,7 @@ import MainContents 					from '../main/MainContents';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import * as mutations 					from '../../cache/mutations';
-import SidebarContents 					from '../sidebar/SidebarContents';
+import MapRegionContents 					from '../mapRegion/MapRegionContents';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
@@ -69,7 +69,7 @@ const WelcomeScreen = (props) => {
             let removed = regions.splice(selectedListIndex, 1);
             regions.unshift(removed[0]);
         }
-        // create data for sidebar links
+        // create data for mapRegion links
         for(let todo of regions) {
             if(todo) {
                 SidebarData.push({_id: todo._id, name: todo.name});
@@ -249,7 +249,7 @@ const WelcomeScreen = (props) => {
 
 
     const deleteMapRegion=async (_id) => {
-        console.log("start delete")
+        DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
     }
 
     return (
@@ -286,7 +286,7 @@ const WelcomeScreen = (props) => {
             <>
                 {/*<WSidebar>*/}
                 {/*    {*/}
-                {/*        <SidebarContents*/}
+                {/*        <MapRegionContents*/}
                 {/*            listIDs={SidebarData} 				activeid={activeList._id} auth={auth}*/}
                 {/*            handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}*/}
                 {/*            updateListField={updateListField} 	key={activeList._id}*/}

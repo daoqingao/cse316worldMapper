@@ -3,7 +3,7 @@ import { WButton, WRow, WCol }  from 'wt-frontend';
 
 const SidebarHeader = (props) => {
     const disabledClick = () => {};
-    const buttonStyle = props.activeid ? ' sidebar-buttons-disabled ' : '';
+    const buttonStyle = props.activeid ? ' mapRegion-buttons-disabled ' : '';
     const buttonOptions = props.activeid ? {shape:"rounded" } : {clickAnimation:"ripple-light" , shape:"rounded", color:"primary"};
     return (
         <WRow className='sidebar-header'>

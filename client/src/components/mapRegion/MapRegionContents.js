@@ -1,15 +1,15 @@
 import React            from 'react';
 import SidebarHeader    from './SidebarHeader';
-import SidebarList      from './SidebarList';
-import SidebarEntry from "./SidebarEntry";
+import MapRegionList      from './MapRegionList';
+import MapRegionEntry from "./MapRegionEntry";
 
-const SidebarContents = (props) => {
+const MapRegionContents = (props) => {
     return (
         <>
             {/*<SidebarHeader */}
             {/*    auth={props.auth} createNewList={props.createNewList} activeid={props.activeid}*/}
             {/*/>*/}
-            <SidebarList
+            <MapRegionList
                 activeid={props.activeid} handleSetActive={props.handleSetActive}
                 listIDs={props.listIDs} createNewList={props.createNewList}
                 updateListField={props.updateListField}
@@ -19,4 +19,4 @@ const SidebarContents = (props) => {
     );
 };
 
-export default SidebarContents;
+export default MapRegionContents;
