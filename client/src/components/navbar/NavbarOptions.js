@@ -10,14 +10,27 @@ const LoggedIn = (props) => {
     const handleLogout = async (e) => {
         Logout();
         const { data } = await props.fetchUser();
-        console.log(data.getCurrentUser.firstName)
+        console.log(data.getCurrentUser.name)
         if (data) {
             let reset = await client.resetStore();
             if (reset) props.setActiveList({});
         }
     };
 
-    const username= "asd"
+
+    const getUser = async () => {
+        const { data } = await props.fetchUser();
+        return data
+    }
+
+
+    (async () => {
+        const result = await getUser()
+        const username= await result.getCurrentUser.name
+    })()
+
+
+    const username="asdfasdasdfasd"
     return (
         <>
 
@@ -62,7 +75,7 @@ const NavbarOptions = (props) => {
         <>
             {
                 props.auth === false ? <LoggedOut setShowLogin={props.setShowLogin} setShowCreate={props.setShowCreate} />
-                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} />
+                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} setShowCreate={props.setShowUpdate} />
             }
         </>
 

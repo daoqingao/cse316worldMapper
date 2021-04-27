@@ -1,6 +1,8 @@
 import Logo 							from '../navbar/Logo';
 import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
+import Update from "../modals/Update";
+
 import MainContents 					from '../main/MainContents';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
@@ -44,6 +46,9 @@ const WelcomeScreen = (props) => {
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [showLogin, toggleShowLogin] 		= useState(false);
     const [showCreate, toggleShowCreate] 	= useState(false);
+
+    const [showUpdate, toggleShowUpdate] 	= useState(false);
+
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
     const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
 
@@ -165,6 +170,7 @@ const WelcomeScreen = (props) => {
     };
 
     const setShowCreate = () => {
+        console.log("show create")
         toggleShowDelete(false);
         toggleShowLogin(false);
         toggleShowCreate(!showCreate);
@@ -174,6 +180,13 @@ const WelcomeScreen = (props) => {
         toggleShowCreate(false);
         toggleShowLogin(false);
         toggleShowDelete(!showDelete)
+    };
+
+    const setShowUpdate = () => {
+        console.log("show update")
+        toggleShowDelete(false);
+        toggleShowLogin(false);
+        toggleShowUpdate(!showUpdate);
     };
 
     const sort = (criteria) => {
@@ -227,6 +240,8 @@ const WelcomeScreen = (props) => {
         console.log("FINISH ADD")
     }
 
+    const userName=""
+
 
     return (
         <WLayout wLayout="header-lside-rside">
@@ -242,6 +257,8 @@ const WelcomeScreen = (props) => {
                             fetchUser={props.fetchUser} 	auth={auth}
                             setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
                             reloadTodos={refetch} 			setActiveList={loadRegion}
+
+                            setShowUpdate={setShowUpdate}
                         />
                     </ul>
                 </WNavbar>
@@ -256,22 +273,22 @@ const WelcomeScreen = (props) => {
                     Welcome To The World Data Mapper
                     </div>
                         :
-<>
-    <WSidebar>
-        {
-            activeList ?
-                <SidebarContents
-                    listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
-                    handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
-                    updateListField={updateListField} 	key={activeList._id}
-                />
-                :
-                <></>
-        }
-    </WSidebar>
+            <>
+                <WSidebar>
+                    {
+                        activeList ?
+                            <SidebarContents
+                                listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
+                                handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
+                                updateListField={updateListField} 	key={activeList._id}
+                            />
+                            :
+                            <></>
+                    }
+                </WSidebar>
 
-    <MapScreen/>
-</>
+                <MapScreen/>
+            </>
 
 
                 }
@@ -287,7 +304,11 @@ const WelcomeScreen = (props) => {
             }
 
             {
-                showLogin && (<Login fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+                showLogin && (<Login userName = {userName} fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+            }
+
+            {
+                showUpdate && (<Update fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} />)
             }
 
         </WLayout>
