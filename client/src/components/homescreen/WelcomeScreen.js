@@ -49,6 +49,8 @@ const WelcomeScreen = (props) => {
 
     const [showUpdate, toggleShowUpdate] 	= useState(false);
 
+    const [username, setUsername] 	= useState("");
+
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
     const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
 
@@ -240,7 +242,11 @@ const WelcomeScreen = (props) => {
         console.log("FINISH ADD")
     }
 
-    const userName=""
+    let userName="nothingHere"
+
+    const userNameSet = async (name) => {
+        setUsername(name)
+    }
 
 
     return (
@@ -259,6 +265,7 @@ const WelcomeScreen = (props) => {
                             reloadTodos={refetch} 			setActiveList={loadRegion}
 
                             setShowUpdate={setShowUpdate}
+                            user={props.user}
                         />
                     </ul>
                 </WNavbar>
@@ -304,11 +311,11 @@ const WelcomeScreen = (props) => {
             }
 
             {
-                showLogin && (<Login userName = {userName} fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+                showLogin && (<Login user={props.user} username = {username} setUsername = {(name) => setUsername((name)) } fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
             }
 
             {
-                showUpdate && (<Update fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} />)
+                showUpdate && (<Update  user={props.user} fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} />)
             }
 
         </WLayout>

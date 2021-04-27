@@ -27,8 +27,14 @@ const Login = (props) => {
 		}
 		if (data) {
 
-			props.userName=data.getCurrentUser.name
-			console.log(data.getCurrentUser.name)
+
+			console.log(props.user)
+
+
+
+
+
+
 			props.fetchUser();
 			props.reloadTodos();
 			toggleLoading(false)

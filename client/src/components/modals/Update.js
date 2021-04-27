@@ -1,13 +1,13 @@
 import React, { useState } 	from 'react';
-import { REGISTER }			from '../../cache/mutations';
+import { UPDATE }			from '../../cache/mutations';
 import { useMutation }    	from '@apollo/client';
 
 import { WModal, WMHeader, WMMain, WMFooter, WButton, WInput, WRow, WCol } from 'wt-frontend';
 
 const Update = (props) => {
-    const [input, setInput] = useState({ email: '', password: '', name: ''});
+    const [input, setInput] = useState({ email: '', password: '', name: '',_id: props.user._id});
     const [loading, toggleLoading] = useState(false);
-    const [Register] = useMutation(REGISTER);
+    const [Update] = useMutation(UPDATE);
 
 
     const updateInput = (e) => {
@@ -16,26 +16,29 @@ const Update = (props) => {
         setInput(updated);
     };
 
-    const handleCreateAccount = async (e) => {
+    const handleUpdateAccount = async (e) => {
         for (let field in input) {
             if (!input[field]) {
-                alert('All fields must be filled out to register');
+                alert('All fields must be filled out to update');
                 return;
             }
         }
-        const { loading, error, data } = await Register({ variables: { ...input } });
+
+
+        console.log(input)
+        const { loading, error, data } = await Update({ variables: { ...input } });
         if (loading) { toggleLoading(true) };
         if (error) { return `Error: ${error.message}` };
         if (data) {
             console.log(data)
             toggleLoading(false);
-            if(data.register.email === 'already exists') {
-                alert('User with that email already registered');
+            if(data.update.email === 'already exists') {
+                alert('User with that email already update');
             }
             else {
                 props.fetchUser();
             }
-            props.setShowCreate(false);
+            props.setShowUpdate(false);
 
         };
     };
@@ -72,8 +75,8 @@ const Update = (props) => {
                     </WMMain>
             }
             <WMFooter>
-                <WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
-                    Submit
+                <WButton className="modal-button" onClick={handleUpdateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
+                    Update Account
                 </WButton>
             </WMFooter>
 

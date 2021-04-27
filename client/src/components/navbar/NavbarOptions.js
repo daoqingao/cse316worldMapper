@@ -18,19 +18,23 @@ const LoggedIn = (props) => {
     };
 
 
-    const getUser = async () => {
-        const { data } = await props.fetchUser();
-        return data
-    }
+    // const getUser = async () => {
+    //     const { data } = await props.fetchUser();
+    //     return data
+    // }
+    //
+    //
+    // (async () => {
+    //     const result = await getUser()
+    //     const username= await result.getCurrentUser.name
+    // })()
 
+    const user=props.user;
+    let username="null";
 
-    (async () => {
-        const result = await getUser()
-        const username= await result.getCurrentUser.name
-    })()
+    if(user)
+        username=user.name
 
-
-    const username="asdfasdasdfasd"
     return (
         <>
 
