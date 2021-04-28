@@ -1,14 +1,17 @@
 import React        from 'react';
 import TableEntry   from './TableEntry';
+import MainRegionTable from "./MainRegionTable";
 
 const TableContents = (props) => {
 
-    let entries = props.activeList ? props.activeList.items : null;
+    //activeRegion is the data of the active region
+    let entries = props.activeRegion ? props.activeRegion.subregionsID : null;
     let entryCount = 0;
     if(entries) {
         entries = entries.filter(entry => entry !== null);
         entryCount = entries.length
-    } 
+    }
+    console.log(entries)
     
     return (
         entries !== undefined && entries.length > 0 ? <div className=' table-entries container-primary'>
@@ -25,7 +28,7 @@ const TableContents = (props) => {
             </div>
             : <div className='container-primary' >
                 {
-                    props.activeList._id ? <h2 className="nothing-msg"> Nothing to do!</h2> : <></> 
+                    props.activeRegion._id ? <h2 className="nothing-msg"> No subregions yet</h2> : <></>
                 }               
                 
             </div>

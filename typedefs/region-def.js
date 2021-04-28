@@ -56,7 +56,7 @@ const typeDefs = gql `
 		sortRule: String
 		sortDirection: Int
 		
-				    capital:String
+		    capital:String
             leader:String
             flag:String
             landmark:String

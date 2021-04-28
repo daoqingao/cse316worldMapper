@@ -1,6 +1,6 @@
 import React 			from 'react';
 import Homescreen 		from './components/homescreen/Homescreen';
-import WelcomeScreen from './components/homescreen/WelcomeScreen';
+import MainScreen from './components/homescreen/MainScreen';
 
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
@@ -20,6 +20,8 @@ const App = () => {
 		let { getCurrentUser } = data;
 		if(getCurrentUser !== null) { user = getCurrentUser; }
     }
+
+	console.log(user)
 	return(
 		<BrowserRouter>
 			<Switch>
@@ -37,7 +39,7 @@ const App = () => {
 					path="/home"
 					name="home"
 					render={() =>
-						<WelcomeScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
+						<MainScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
 					}
 				/>
 				<Route/>

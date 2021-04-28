@@ -1,7 +1,7 @@
 // import Logo 							from '../navbar/Logo';
 // import Login 							from '../modals/Login';
 // import Delete 							from '../modals/Delete';
-// import MainContents 					from '../main/MainContents';
+// import MainRegionTable 					from '../main/MainRegionTable';
 // import CreateAccount 					from '../modals/CreateAccount';
 // import NavbarOptions 					from '../navbar/NavbarOptions';
 // import * as mutations 					from '../../cache/mutations';
@@ -270,7 +270,7 @@
 // 					activeList ?
 //
 // 							<div className="container-secondary">
-// 								<MainContents
+// 								<MainRegionTable
 // 									addItem={addItem} 				deleteItem={deleteItem}
 // 									editItem={editItem} 			reorderItem={reorderItem}
 // 									setShowDelete={setShowDelete} 	undo={tpsUndo} redo={tpsRedo}

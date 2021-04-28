@@ -18,12 +18,22 @@ const MapRegionEntry = (props) => {
         props.updateListField(props._id, name, value, preEdit);
     };
 
+    const handleSetActive = (e) => {
+        props.handleSetActive(props._id)
+        props.setShowMapRegion()
+        props.setShowRegionTable(props._id)
+    }
+
     const entryStyle = props._id === props.activeid ? 'list-item-active' : 'list-item ';
     
     return (
         <WNavItem
             className={entryStyle} onDoubleClick={handleEditing} 
-            onClick={() => { props.handleSetActive(props._id) }} 
+            onClick={() => { handleSetActive()
+
+
+
+            }}
         >
             {
                 editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"

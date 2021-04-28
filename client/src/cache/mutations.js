@@ -111,7 +111,6 @@ export const ADD_REGION = gql`
 			sortRule
 			sortDirection
 			
-			
             capital
             leader
             flag

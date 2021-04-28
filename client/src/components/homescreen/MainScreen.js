@@ -3,7 +3,7 @@ import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
 import Update from "../modals/Update";
 
-import MainContents 					from '../main/MainContents';
+import MainRegionTable 					from '../main/MainRegionTable';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import * as mutations 					from '../../cache/mutations';
@@ -22,7 +22,7 @@ import { UpdateListField_Transaction,
 import MapScreen from "./MapScreen";
 import globe from "../icons/logo512.png"
 
-const WelcomeScreen = (props) => {
+const MainScreen = (props) => {
 
     const keyCombination = (e, callback) => {
         if(e.key === 'z' && e.ctrlKey) {
@@ -39,15 +39,20 @@ const WelcomeScreen = (props) => {
     document.onkeydown = keyCombination;
 
     const auth = props.user === null ? false : true;
+
+
     let regions 	= [];
     let SidebarData = [];
     const [sortRule, setSortRule] = useState('unsorted'); // 1 is ascending, -1 desc
-    const [activeList, setActiveList] 		= useState({});
+    const [activeRegion, setActiveRegion] 		= useState({});
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [showLogin, toggleShowLogin] 		= useState(false);
     const [showCreate, toggleShowCreate] 	= useState(false);
-
     const [showUpdate, toggleShowUpdate] 	= useState(false);
+
+    const [showMapRegion, toggleShowMapRegion] 	= useState(false);
+
+    const [showRegionTable, toggleShowRegionTable] 	= useState(false);
 
     const [username, setUsername] 	= useState("");
 
@@ -64,8 +69,8 @@ const WelcomeScreen = (props) => {
             regions.push(region)
         }
         // if a list is selected, shift it to front of regions
-        if(activeList._id) {
-            let selectedListIndex = regions.findIndex(entry => entry._id === activeList._id);
+        if(activeRegion._id) {
+            let selectedListIndex = regions.findIndex(entry => entry._id === activeRegion._id);
             let removed = regions.splice(selectedListIndex, 1);
             regions.unshift(removed[0]);
         }
@@ -81,10 +86,10 @@ const WelcomeScreen = (props) => {
 
     // NOTE: might not need to be async
     const reloadList = async () => {
-        if (activeList._id) {
-            let tempID = activeList._id;
+        if (activeRegion._id) {
+            let tempID = activeRegion._id;
             let list = regions.find(list => list._id === tempID);
-            setActiveList(list);
+            setActiveRegion(list);
         }
     }
 
@@ -92,7 +97,7 @@ const WelcomeScreen = (props) => {
         props.tps.clearAllTransactions();
         setCanUndo(props.tps.hasTransactionToUndo());
         setCanRedo(props.tps.hasTransactionToRedo());
-        setActiveList(list);
+        setActiveRegion(list);
 
     }
 
@@ -130,7 +135,7 @@ const WelcomeScreen = (props) => {
     }
 
     const addItem = async () => {
-        let list = activeList;
+        let list = activeRegion;
         const items = list.items;
         const newItem = {
             _id: '',
@@ -141,7 +146,7 @@ const WelcomeScreen = (props) => {
         };
         let opcode = 1;
         let itemID = newItem._id;
-        let listID = activeList._id;
+        let listID = activeRegion._id;
         let transaction = new UpdateListItems_Transaction(listID, itemID, newItem, opcode, AddTodoItem, DeleteTodoItem);
         props.tps.addTransaction(transaction);
         tpsRedo();
@@ -191,10 +196,33 @@ const WelcomeScreen = (props) => {
         toggleShowUpdate(!showUpdate);
     };
 
+    const setShowMapRegion = () => {
+        console.log("show update")
+        toggleShowDelete(false);
+        toggleShowLogin(false);
+        toggleShowMapRegion(!showMapRegion);
+    };
+
+    const setShowRegionTable = (_id) => {
+        console.log("show update")
+        toggleShowDelete(false);
+        toggleShowLogin(false);
+        toggleShowRegionTable(!showRegionTable);
+
+        const activeRegion= regions.find(region => region._id === _id);
+
+        props.tps.clearAllTransactions();
+        setCanUndo(props.tps.hasTransactionToUndo());
+        setCanRedo(props.tps.hasTransactionToRedo());
+        setActiveRegion(activeRegion);
+
+
+    };
+
     const sort = (criteria) => {
         let prevSortRule = sortRule;
         setSortRule(criteria);
-        let transaction = new SortItems_Transaction(activeList._id, criteria, prevSortRule, sortTodoItems);
+        let transaction = new SortItems_Transaction(activeRegion._id, criteria, prevSortRule, sortTodoItems);
         console.log(transaction)
         props.tps.addTransaction(transaction);
         tpsRedo();
@@ -223,7 +251,7 @@ const WelcomeScreen = (props) => {
             regionLandmark: ["none"],
 
             parentRegionID: '',
-            subregionsID: [],
+            subregionsID: ["60878bdf8f9efa12d498fee6"],
             isRoot: true
 
         }
@@ -269,47 +297,64 @@ const WelcomeScreen = (props) => {
 
                             setShowUpdate={setShowUpdate}
                             user={props.user}
+
+
+
                         />
                     </ul>
                 </WNavbar>
             </WLHeader>
 
-            <WLMain>
+
+
+{ !auth && <WLMain>
+ {
+            <div className="centerGlobe">
+                <img src={globe}/>
+                Welcome To The World Data Mapper
+            </div>}</WLMain>}
+
+            {(!showRegionTable && auth) && <WLMain>
                 {
-                    !auth?
-                    <div className="centerGlobe">
-                    <img
-                        src={globe} ></img>
-                    Welcome To The World Data Mapper
-                    </div>
-                        :
-            <>
-                {/*<WSidebar>*/}
-                {/*    {*/}
-                {/*        <MapRegionContents*/}
-                {/*            listIDs={SidebarData} 				activeid={activeList._id} auth={auth}*/}
-                {/*            handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}*/}
-                {/*            updateListField={updateListField} 	key={activeList._id}*/}
-                {/*        />*/}
-                {/*    }*/}
-                {/*</WSidebar>*/}
-
-                <MapScreen
-                    listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
-                    handleSetActive={handleSetActive} 	createNewList={createNewMapRegion}
-                    updateListField={updateListField} 	key={activeList._id}
-                    createNewMapRegion={createNewMapRegion}
-                    deleteMapRegion={(_id) => (deleteMapRegion(_id))}
-                />
-            </>
-
-
+                    (<MapScreen
+                        listIDs={SidebarData} activeid={activeRegion._id} auth={auth}
+                        handleSetActive={handleSetActive} createNewList={createNewMapRegion}
+                        updateListField={updateListField} key={activeRegion._id}
+                        createNewMapRegion={createNewMapRegion}
+                        deleteMapRegion={(_id) => (deleteMapRegion(_id))}
+                        setShowMapRegion={setShowMapRegion}
+                        setShowRegionTable={(_id)=> setShowRegionTable(_id)}
+                    />)
                 }
+            </WLMain>}
 
+            {(showRegionTable && auth) && <WLMain>
+                {
+
+                    <div className="container-secondary">
+                        <MainRegionTable
+                            addItem={addItem}
+
+                            setShowDelete={setShowDelete} 	undo={tpsUndo} redo={tpsRedo}
+                            activeRegion={activeRegion}
+
+
+                            canUndo={canUndo} 				canRedo={canRedo}
+                            sort={sort}
+
+                            allRegionIDs = {SidebarData}
+                            allRegions = {regions}
+                        />
+                    </div>
+                }
             </WLMain>
 
+            }
+
+
+
             {
-                showDelete && (<Delete deleteList={deleteList} activeid={activeList._id} setShowDelete={setShowDelete} />)
+                showDelete && (<Delete deleteList={deleteList} activeid={activeRegion._id} setShowDelete={setShowDelete} />)
             }
 
             {
@@ -317,7 +362,7 @@ const WelcomeScreen = (props) => {
             }
 
             {
-                showLogin && (<Login user={props.user} username = {username} setUsername = {(name) => setUsername((name)) } fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+                showLogin && (<Login setShowMapRegion={setShowMapRegion} user={props.user} username = {username} setUsername = {(name) => setUsername((name)) } fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
             }
 
             {
@@ -327,4 +372,5 @@ const WelcomeScreen = (props) => {
         </WLayout>
     );
 };
-export default WelcomeScreen;
+
+export default MainScreen;

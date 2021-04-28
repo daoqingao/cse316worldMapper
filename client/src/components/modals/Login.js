@@ -39,6 +39,7 @@ const Login = (props) => {
 			props.reloadTodos();
 			toggleLoading(false)
 			props.setShowLogin(false)
+			props.setShowMapRegion()
 		};
 	};
 

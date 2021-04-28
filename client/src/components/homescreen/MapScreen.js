@@ -32,6 +32,8 @@ const MapScreen = (props) => {
                             handleSetActive={props.handleSetActive} 	createNewList={props.createNewList}
                             updateListField={props.updateListField} 	key={props.key}
                             deleteMapRegion={(_id) => (props.deleteMapRegion(_id))}
+                            setShowMapRegion=  {props.setShowMapRegion}
+                            setShowRegionTable={(_id)=> props.setShowRegionTable(_id)}
                         />
                     </WCol>
                     <WCol size="6">
@@ -43,7 +45,7 @@ const MapScreen = (props) => {
                         </WRow>
                         <WRow size="6">
 
-                                <WButton  onClick={props.createNewList} >Add new Map</WButton>
+                                <WButton  onClick={props.createNewList} style={{float:"right"}}>Add new Map</WButton>
                         </WRow>
                     </WCol>
                 </WRow>

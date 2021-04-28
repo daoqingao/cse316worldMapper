@@ -29,11 +29,8 @@ const LoggedIn = (props) => {
     //     const username= await result.getCurrentUser.name
     // })()
 
-    const user=props.user;
-    let username="null";
+    const username=props.user.name;
 
-    if(user)
-        username=user.name
 
     return (
         <>
@@ -79,11 +76,12 @@ const NavbarOptions = (props) => {
         <>
             {
                 props.auth === false ? <LoggedOut setShowLogin={props.setShowLogin} setShowCreate={props.setShowCreate} />
-                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} setShowCreate={props.setShowUpdate} />
+                : <LoggedIn user={props.user} fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} setShowCreate={props.setShowUpdate} />
             }
         </>
 
     );
 };
+
 
 export default NavbarOptions;
