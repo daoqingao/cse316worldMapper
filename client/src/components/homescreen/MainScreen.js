@@ -280,6 +280,8 @@ const MainScreen = (props) => {
         DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
     }
 
+
+
     return (
         <WLayout wLayout="header-lside-rside">
             <WLHeader>
@@ -315,6 +317,7 @@ const MainScreen = (props) => {
             </div>}</WLMain>}
 
             {(!showRegionTable && auth) && <WLMain>
+
                 {
                     (<MapScreen
                         listIDs={SidebarData} activeid={activeRegion._id} auth={auth}
@@ -342,8 +345,10 @@ const MainScreen = (props) => {
                             canUndo={canUndo} 				canRedo={canRedo}
                             sort={sort}
 
+                            editSubregion ={}
                             allRegionIDs = {SidebarData}
                             allRegions = {regions}
+
                         />
                     </div>
                 }
@@ -372,5 +377,6 @@ const MainScreen = (props) => {
         </WLayout>
     );
 };
+
 
 export default MainScreen;

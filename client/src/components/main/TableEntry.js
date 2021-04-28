@@ -4,133 +4,132 @@ import { WButton, WInput, WRow, WCol } from 'wt-frontend';
 const TableEntry = (props) => {
     const { data } = props;
 
-    const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
-    const assignedToStyle = data.completed ? 'complete-task-assignedTo' : 'incomplete-task-assignedTo';
 
-    const description = data.description;
-    const due_date = data.due_date;
-    const status = data.completed ? 'complete' : 'incomplete';
-    const assigned_to = data.assigned_to;
+    const name = data.name;
+    const capital = data.capital;
+    const leader= data.leader;
+    const flag = data.flag;
+    const landmarks = data.landmark
 
-    const canMoveUp = props.index > 0 ? true : false;
-    const canMoveDown = props.index < props.entryCount-1 ? true : false;
-    
-    const [editingDate, toggleDateEdit] = useState(false);
-    const [editingDescr, toggleDescrEdit] = useState(false);
-    const [editingStatus, toggleStatusEdit] = useState(false);
-    const [editingAssigned, toggleAssignEdit] = useState(false);
+
+    const [editingRegionName, toggleRegionNameEdit] = useState(false);
+    const [editingCapital, toggleCapitalEdit] = useState(false);
+    const [editingLeader, toggleLeaderEdit] = useState(false);
+
 
     const disabledButton = () => {}
 
-    const handleDateEdit = (e) => {
-        toggleDateEdit(false);
-        const newDate = e.target.value ? e.target.value : 'No Date';
-        const prevDate = due_date;
-        if(newDate !== prevDate) {
-            props.editItem(data._id, 'due_date', newDate, prevDate);
-        }
-
-    };
-
-    const handleDescrEdit = (e) => {
-        toggleDescrEdit(false);
-        const newDescr = e.target.value ? e.target.value : 'No Description';
-        const prevDescr = description;
-        if(newDescr !== prevDescr) {
-            props.editItem(data._id, 'description', newDescr, prevDescr);
+    const handleRegionNameEdit = (e) => {
+        toggleRegionNameEdit(false);
+        const newName = e.target.value ? e.target.value : 'No RegionName';
+        const prevName = name;
+        if(newName !== prevName) {
+            props.editItem(data._id, 'name', newName, prevName);
         }
     };
 
-    const handleStatusEdit = (e) => {
-        toggleStatusEdit(false);
-        const newStatus = e.target.value ? e.target.value : false;
-        const prevStatus = status;
-        if(newStatus !== prevStatus) {
-            props.editItem(data._id, 'completed', newStatus, prevStatus);
+
+    const handleCapitalEdit = (e) => {
+        toggleCapitalEdit(false);
+        const newF = e.target.value ? e.target.value : 'No Capital';
+        const prev = capital;
+        if(newF  !== prev) {
+            props.editItem(data._id, 'capital', newF, prev);
         }
     };
 
-    const handleAssignEdit = (e) => {
-        toggleAssignEdit(false);
-        const newAssigned = e.target.value ? e.target.value : 'Myself';
-        const prevAssigned = assigned_to;
-        if(newAssigned !== prevAssigned) {
-            props.editItem(data._id, 'assigned_to', newAssigned, prevAssigned);
+    const handleLeaderEdit = (e) => {
+        toggleLeaderEdit(false);
+        const newF = e.target.value ? e.target.value : 'No Leader';
+        const prev = leader;
+        if(newF  !== prev) {
+            props.editItem(data._id, 'leader', newF, prev);
         }
-    }
+    };
+
+
+
+
+
 
     return (
         <WRow className='table-entry'>
-            <WCol size="3">
+            <WCol size="2">
                 {
-                    editingDescr || description === ''
+                    editingRegionName || name === ''
                         ? <WInput
-                            className='table-input' onBlur={handleDescrEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleDescrEdit(e)}}
-                            autoFocus={true} defaultValue={description} type='text'
+                            className='table-input' onBlur={handleRegionNameEdit}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleRegionNameEdit(e)}}
+                            autoFocus={true} defaultValue={name} type='text'
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
-                            onClick={() => toggleDescrEdit(!editingDescr)}
-                        >{description}
+                            onClick={() => toggleRegionNameEdit(!editingRegionName)}
+                        >{name}
                         </div>
                 }
             </WCol>
 
             <WCol size="2">
                 {
-                    editingDate ? <WInput
-                        className='table-input' onBlur={handleDateEdit}
-                        autoFocus={true} defaultValue={due_date} type='date'
-                        wtype="outlined" baranimation="solid" inputclass="table-input-class"
-                    />
-                        : <div className="table-text"
-                            onClick={() => toggleDateEdit(!editingDate)}
-                        >{due_date}
-                        </div>
-                }
-            </WCol>
-
-            <WCol size="2">
-                {
-
-                    editingStatus ? <select
-                        className='table-select' onBlur={handleStatusEdit}
-                        autoFocus={true} defaultValue={status}
-                    >
-                        <option value="complete">complete</option>
-                        <option value="incomplete">incomplete</option>
-                    </select>
-                        : <div onClick={() => toggleStatusEdit(!editingStatus)} className={`${completeStyle} table-text`}>
-                            {status}
-                        </div>
-                }
-            </WCol>
-
-            <WCol size="2">
-                {
-                    editingAssigned || assigned_to === ''
+                    editingCapital || capital === ''
                         ? <WInput
-                            className='table-input' onBlur={handleAssignEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleAssignEdit(e)}}
-
-                            autoFocus={true} defaultValue={assigned_to} type='text'
-                            /*wType="outlined" barAnimation="solid" */inputclass="table-input-class"
+                            className='table-input' onBlur={handleCapitalEdit}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)}}
+                            autoFocus={true} defaultValue={name} type='text'
+                            inputClass="table-input-class"
                         />
-                        : <div className={`${assignedToStyle} table-text`}
-                            onClick={() => toggleAssignEdit(!editingAssigned)}
-                        >{assigned_to}
+                        : <div className="table-text"
+                               onClick={() => toggleCapitalEdit(!editingCapital)}
+                        >{capital}
                         </div>
                 }
             </WCol>
+
+
+            <WCol size="2">
+                {
+                    editingLeader|| leader === ''
+                        ? <WInput
+                            className='table-input' onBlur={handleLeaderEdit}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
+                            autoFocus={true} defaultValue={name} type='text'
+                            inputClass="table-input-class"
+                        />
+                        : <div className="table-text"
+                               onClick={() => toggleLeaderEdit(!editingLeader)}
+                        >{leader}
+                        </div>
+                }
+            </WCol>
+
+            <WCol size="3">
+                {
+                    <div className="table-text">
+                        {flag}
+                    </div>
+
+                }
+            </WCol>
+
+            <WCol size="3">
+                {
+                    <div className="table-text">
+                        {landmarks}
+                    </div>
+
+                }
+            </WCol>
+
+
             <WCol size="3">
                 <div className='button-group'>
-                    <WButton className={canMoveUp ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveUp ? () => props.reorderItem(data._id, -1) : disabledButton } wType="texted">
-                        <i className="material-icons">expand_less</i>
-                    </WButton>
-                    <WButton className={canMoveDown ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveDown ? () => props.reorderItem(data._id, 1) : disabledButton } wType="texted">
-                        <i className="material-icons">expand_more</i>
-                    </WButton>
+                    {/*<WButton className={canMoveUp ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveUp ? () => props.reorderItem(data._id, -1) : disabledButton } wType="texted">*/}
+                    {/*    <i className="material-icons">expand_less</i>*/}
+                    {/*</WButton>*/}
+                    {/*<WButton className={canMoveDown ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveDown ? () => props.reorderItem(data._id, 1) : disabledButton } wType="texted">*/}
+                    {/*    <i className="material-icons">expand_more</i>*/}
+                    {/*</WButton>*/}
                     <WButton className="table-entry-buttons" onClick={() => props.deleteItem(data, props.index)} wType="texted">
                         <i className="material-icons">close</i>
                     </WButton>
