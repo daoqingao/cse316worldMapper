@@ -47,7 +47,7 @@ const TableHeader = (props) => {
                     <WButton  {...redoOptions}>
                             <i className="material-icons">redo</i>
                     </WButton>
-                    <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
+                    <WButton onClick={props.disabled ? clickDisabled : props.addSubregion} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
                         <i className="material-icons">add_box</i>
                     </WButton>
                     <WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>

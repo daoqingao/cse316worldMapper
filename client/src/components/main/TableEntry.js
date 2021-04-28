@@ -43,7 +43,7 @@ const TableEntry = (props) => {
         const newF = e.target.value ? e.target.value : 'No Leader';
         const prev = leader;
         if(newF  !== prev) {
-            props.editSubregionm(data._id, 'leader', newF, prev);
+            props.editSubregion(data._id, 'leader', newF, prev);
         }
     };
 
@@ -130,7 +130,7 @@ const TableEntry = (props) => {
                     {/*<WButton className={canMoveDown ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveDown ? () => props.reorderItem(data._id, 1) : disabledButton } wType="texted">*/}
                     {/*    <i className="material-icons">expand_more</i>*/}
                     {/*</WButton>*/}
-                    <WButton className="table-entry-buttons" onClick={() => props.deleteItem(data, props.index)} wType="texted">
+                    <WButton className="table-entry-buttons" onClick={() => props.deleteSubregion(data, props.index)} wType="texted">
                         <i className="material-icons">close</i>
                     </WButton>
                 </div>

@@ -17,7 +17,7 @@ import { UpdateListField_Transaction,
     SortItems_Transaction,
     UpdateListItems_Transaction,
     ReorderItems_Transaction,
-    EditItem_Transaction } 				from '../../utils/jsTPS';
+    EditSubregion_Transaction } 				from '../../utils/jsTPS';
 
 import MapScreen from "./MapScreen";
 import globe from "../icons/logo512.png"
@@ -109,13 +109,18 @@ const MainScreen = (props) => {
 
     const [ReorderTodoItems] 		= useMutation(mutations.REORDER_ITEMS, mutationOptions);
     const [sortTodoItems] 		= useMutation(mutations.SORT_ITEMS, mutationOptions);
-    const [UpdateTodoItemField] 	= useMutation(mutations.UPDATE_ITEM_FIELD, mutationOptions);
+
 
     const [DeleteTodoItem] 			= useMutation(mutations.DELETE_ITEM, mutationOptions);
     const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM, mutationOptions);
+
+
+    const [UpdateSubregionField] 	= useMutation(mutations.UPDATE_ITEM_FIELD, mutationOptions);
+
     const [AddRegion] 			= useMutation(mutations.ADD_REGION);
     const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION);
     const [UpdateRegionsField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
+    const [UpdateRegionsFieldSubregionID] 	= useMutation(mutations.UPDATE_REGION_FIELD_SUBREGIONID, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -251,7 +256,7 @@ const MainScreen = (props) => {
             regionLandmark: ["none"],
 
             parentRegionID: '',
-            subregionsID: ["60878bdf8f9efa12d498fee6"],
+            subregionsID: [],
             isRoot: true
 
         }
@@ -272,11 +277,85 @@ const MainScreen = (props) => {
     const deleteMapRegion=async (_id) => {
         DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
     }
-    const editSubregion=async (_id,type,value,prev) => {
 
-        console.log("edit")
+
+
+
+    const editSubregion=async (_id,field,value,prev) => {
+
+        // let subregionID=_id
+        // let flag = 0;
+        // if (field === 'completed') flag = 1;
+        // let listID = activeRegion._id;
+        // //let transaction = new EditSubregion_Transaction(listID, subregionID, field, prev, value, flag, UpdateSubregionField);
+        // //props.tps.addTransaction(transaction);
+        // tpsRedo();
+
+
+        let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsField);
+        props.tps.addTransaction(transaction);
+        tpsRedo();
+
     }
-    const addSubregion=async (_id) => {
+    const addSubregion=async () => {
+
+        let parentRegionID = activeRegion._id
+        let parentRegionName = activeRegion.name
+        let subregion = {
+            _id: '',
+            name: 'Untitled',
+            owner: props.user._id,
+            items: [],
+            sortRule: 'task',
+            sortDirection: 1,
+
+            capital: "none1",
+            leader: "none",
+            flag: "none",
+            landmark: "none",
+            parentRegion: parentRegionName ,
+            subregionNumber: 0,
+            regionLandmark: ["none"],
+
+            parentRegionID: parentRegionID,
+            subregionsID: [],
+            isRoot: false
+
+        }
+
+
+
+        //also need to change the parent region's children[] and link them together
+        const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]});
+
+
+        let _id=activeRegion._id
+        let field="subregionsID"
+        let prev=activeRegion.subregionsID
+        let value=[...activeRegion.subregionsID]
+        value.push(data.addRegion._id)
+
+        let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsFieldSubregionID);
+        props.tps.addTransaction(transaction);
+        tpsRedo();
+
+
+
+        if (data) {
+            loadRegion(activeRegion);
+        }
+
+        console.log("FINISH ADD")
+
+
+    }
+
+    const deleteSubregion=async (subregion,index) => {
+
+        console.log("delete cild")
+        let _id = subregion._id
+        DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+
     }
 
 
@@ -350,6 +429,7 @@ const MainScreen = (props) => {
 
                             editSubregion ={editSubregion}
                             addSubregion ={addSubregion}
+                            deleteSubregion ={deleteSubregion}
 
                         />
                     </div>

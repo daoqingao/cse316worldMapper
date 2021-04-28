@@ -24,6 +24,7 @@ const MainRegionTable = (props) => {
                 allRegions =   {props.allRegions}
 
                 editSubregion ={props.editSubregion}
+                deleteSubregion ={props.deleteSubregion}
 
             />
         </div>

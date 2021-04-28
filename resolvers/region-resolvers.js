@@ -125,10 +125,22 @@ module.exports = {
 			@returns {boolean} true on successful update, false on failure
 		**/
 		updateRegionField: async (_, args) => {
+
 			const { field, value, _id } = args;
 			const objectId = new ObjectId(_id);
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
 			if(updated) return value;
+			else return "";
+		},
+
+		updateRegionFieldSubregionID: async (_, args) => {
+
+			const { field, value, _id } = args;
+
+
+			const objectId = new ObjectId(_id);
+			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
+			if(updated) return value.pop();
 			else return "";
 		},
 		/** 

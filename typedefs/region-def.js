@@ -39,6 +39,9 @@ const typeDefs = gql `
 		deleteItem(itemId: String!, _id: String!): [Item]		
 		deleteRegion(_id: String!): Boolean
 		updateRegionField(_id: String!, field: String!, value: String!): String
+		updateRegionFieldSubregionID(_id: String!, field: String!, value: [String]): String
+		
+		
 		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]
 		reorderItems(itemId: String!, _id: String!, direction: Int!): [Item]
 		sortItems(_id: String!, criteria: String!): [Item]
