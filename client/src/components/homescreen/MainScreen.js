@@ -269,17 +269,15 @@ const MainScreen = (props) => {
         console.log("FINISH ADD")
     }
 
-
-
-    const userNameSet = async (name) => {
-        setUsername(name)
-    }
-
-
     const deleteMapRegion=async (_id) => {
         DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
     }
+    const editSubregion=async (_id,type,value,prev) => {
 
+        console.log("edit")
+    }
+    const addSubregion=async (_id) => {
+    }
 
 
     return (
@@ -342,12 +340,16 @@ const MainScreen = (props) => {
                             activeRegion={activeRegion}
 
 
-                            canUndo={canUndo} 				canRedo={canRedo}
+                            canUndo={canUndo}
+                            canRedo={canRedo}
                             sort={sort}
 
-                            editSubregion ={}
+
                             allRegionIDs = {SidebarData}
                             allRegions = {regions}
+
+                            editSubregion ={editSubregion}
+                            addSubregion ={addSubregion}
 
                         />
                     </div>

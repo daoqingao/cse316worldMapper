@@ -24,7 +24,7 @@ const TableEntry = (props) => {
         const newName = e.target.value ? e.target.value : 'No RegionName';
         const prevName = name;
         if(newName !== prevName) {
-            props.editItem(data._id, 'name', newName, prevName);
+            props.editSubregion(data._id, 'name', newName, prevName);
         }
     };
 
@@ -34,7 +34,7 @@ const TableEntry = (props) => {
         const newF = e.target.value ? e.target.value : 'No Capital';
         const prev = capital;
         if(newF  !== prev) {
-            props.editItem(data._id, 'capital', newF, prev);
+            props.editSubregion(data._id, 'capital', newF, prev);
         }
     };
 
@@ -43,7 +43,7 @@ const TableEntry = (props) => {
         const newF = e.target.value ? e.target.value : 'No Leader';
         const prev = leader;
         if(newF  !== prev) {
-            props.editItem(data._id, 'leader', newF, prev);
+            props.editSubregionm(data._id, 'leader', newF, prev);
         }
     };
 

@@ -11,17 +11,20 @@ const MainRegionTable = (props) => {
                 undo={props.undo} redo={props.redo}     canUndo={props.canUndo} 
                 canRedo={props.canRedo}                 setShowDelete={props.setShowDelete}
                 setActiveList={props.setActiveList}     sort={props.sort}
+
+                addSubregion = {props.addSubregion}
             />
             <TableContents
                 key={props.activeRegion._id}
                 activeRegion={props.activeRegion}
 
-                deleteItem={props.deleteItem}
-                reorderItem={props.reorderItem}
-                editItem={props.editItem}
+
 
                 allRegionIDs = {props.allRegionIDs}
                 allRegions =   {props.allRegions}
+
+                editSubregion ={props.editSubregion}
+
             />
         </div>
     );
