@@ -6,8 +6,10 @@ const MapRegionList = (props) => {
     return (
         <>
             {
+
                 props.listIDs &&
                 props.listIDs.map(entry => (
+                    entry.isRoot?
                     <MapRegionEntry
                         handleSetActive={props.handleSetActive} activeid={props.activeid}
                         id={tempID++} key={entry._id+props.activeid} name={entry.name} _id={entry._id}
@@ -16,7 +18,7 @@ const MapRegionList = (props) => {
                         deleteMapRegion={(_id) => (props.deleteMapRegion(_id))}
                         setShowMapRegion=  {props.setShowMapRegion}
                         setShowRegionTable={(_id)=> props.setShowRegionTable(_id)}
-                    />
+                    />:<></>
                 ))
             }
         </>

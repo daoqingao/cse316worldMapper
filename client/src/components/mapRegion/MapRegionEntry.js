@@ -28,12 +28,15 @@ const MapRegionEntry = (props) => {
     
     return (
         <WNavItem
-            className={entryStyle} onDoubleClick={handleEditing} 
-            onClick={() => { handleSetActive()
+            className={entryStyle} onDoubleClick={                handleEditing }
+            onClick={
+                handleSetActive
 
 
 
-            }}
+
+
+            }
         >
             {
                 editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"

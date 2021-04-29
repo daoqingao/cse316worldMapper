@@ -358,6 +358,20 @@ const MainScreen = (props) => {
 
     }
 
+    const changeRegion = async(_id) => {
+        console.log("change to Region")
+        toggleShowDelete(false);
+        toggleShowLogin(false);
+
+        const activeRegion= regions.find(region => region._id === _id);
+
+        props.tps.clearAllTransactions();
+        setCanUndo(props.tps.hasTransactionToUndo());
+        setCanRedo(props.tps.hasTransactionToRedo());
+        setActiveRegion(activeRegion);
+
+    }
+
 
     return (
         <WLayout wLayout="header-lside-rside">
@@ -389,15 +403,18 @@ const MainScreen = (props) => {
 { !auth && <WLMain>
  {
             <div className="centerGlobe">
-                <img src={globe}/>
+                {/*<img src={globe}/>*/}
+
+                <i className="material-icons another" >public</i>
                 Welcome To The World Data Mapper
-            </div>}</WLMain>}
+            </div>}
+</WLMain>}
 
             {(!showRegionTable && auth) && <WLMain>
 
                 {
                     (<MapScreen
-                        listIDs={SidebarData} activeid={activeRegion._id} auth={auth}
+                        listIDs={regions} activeid={activeRegion._id} auth={auth}
                         handleSetActive={handleSetActive} createNewList={createNewMapRegion}
                         updateListField={updateListField} key={activeRegion._id}
                         createNewMapRegion={createNewMapRegion}
@@ -430,6 +447,7 @@ const MainScreen = (props) => {
                             editSubregion ={editSubregion}
                             addSubregion ={addSubregion}
                             deleteSubregion ={deleteSubregion}
+                            changeRegion={(_id) => changeRegion(_id)}
 
                         />
                     </div>

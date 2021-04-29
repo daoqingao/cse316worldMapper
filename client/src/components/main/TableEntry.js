@@ -103,16 +103,16 @@ const TableEntry = (props) => {
                 }
             </WCol>
 
-            <WCol size="3">
+            <WCol size="2">
                 {
-                    <div className="table-text">
+                    <div className="table-text" onClick={ () => props.changeRegion(data._id)}>
                         {flag}
                     </div>
 
                 }
             </WCol>
 
-            <WCol size="3">
+            <WCol size="2">
                 {
                     <div className="table-text">
                         {landmarks}
@@ -122,7 +122,7 @@ const TableEntry = (props) => {
             </WCol>
 
 
-            <WCol size="3">
+            <WCol size="2">
                 <div className='button-group'>
                     {/*<WButton className={canMoveUp ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveUp ? () => props.reorderItem(data._id, -1) : disabledButton } wType="texted">*/}
                     {/*    <i className="material-icons">expand_less</i>*/}
