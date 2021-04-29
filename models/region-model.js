@@ -24,7 +24,7 @@ const regionSchema = new Schema(
 			type: String,
 			required: true
 		},
-		items: [Item],
+
 		sortRule: {
 			type: String,
 			required: true

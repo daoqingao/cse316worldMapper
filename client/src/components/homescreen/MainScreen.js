@@ -243,7 +243,7 @@ const MainScreen = (props) => {
             _id: '',
             name: 'Untitled',
             owner: props.user._id,
-            items: [],
+
             sortRule: 'task',
             sortDirection: 1,
 
@@ -305,7 +305,7 @@ const MainScreen = (props) => {
             _id: '',
             name: 'Untitled',
             owner: props.user._id,
-            items: [],
+
             sortRule: 'task',
             sortDirection: 1,
 

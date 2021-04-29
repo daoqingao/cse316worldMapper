@@ -71,7 +71,7 @@ module.exports = {
 				_id: objectId,
 				name: name,
 				owner: owner,
-				items: items,
+
 				sortRule: sortRule,
 				sortDirection: sortDirection,
 

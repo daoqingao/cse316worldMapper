@@ -16,11 +16,7 @@ const cache = new InMemoryCache({
 	typePolicies: {
 		Region: {
 			fields: {
-				items: {
-					merge(existing, incoming){
-						return incoming
-					}
-				},
+
 			},
 		},
 		Query: {

@@ -6,7 +6,7 @@ const typeDefs = gql `
 		_id: String!
 		name: String!
 		owner: String!
-		items: [Item]
+
 		sortRule: String!
 		sortDirection: Int!
 		
@@ -55,7 +55,7 @@ const typeDefs = gql `
 		_id: String
 		name: String
 		owner: String
-		items: [ItemInput]
+
 		sortRule: String
 		sortDirection: Int
 		

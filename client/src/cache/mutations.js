@@ -101,13 +101,7 @@ export const ADD_REGION = gql`
 			_id
 			name
 			owner
-			items {
-				_id
-				description
-				due_date
-				assigned_to
-				completed
-			}
+
 			sortRule
 			sortDirection
 			
