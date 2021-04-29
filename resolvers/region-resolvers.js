@@ -60,6 +60,7 @@ module.exports = {
 			@returns {string} the objectID of the region or an error message
 		**/
 		addRegion: async (_, args) => {
+			// THIS IS ONLY USE TO ADD ROOT MAPS REGION
 			console.log("First ")
 
 			const { region: region } = args;
@@ -134,16 +135,42 @@ module.exports = {
 			else return "";
 		},
 
-		updateRegionFieldSubregionID: async (_, args) => {
+		addSubregion: async (_, args) => {
 
-			console.log("update region sub id")
-			const { field, value, _id } = args;
+			console.log("add subregion to this id");
+			const {_id,userID } = args;
+			const ParentRegionObjectId = new ObjectId(_id);
+			const SubregionObjectId = new ObjectId();
+			const data = await Region.findOne({_id: ParentRegionObjectId});
+
+			const newSubregion = new Region({
+				_id: SubregionObjectId,
+				name: 'Untitled',
+				owner: userID,
+
+				sortRule: 'task',
+				sortDirection: 1,
+
+				capital: "none1",
+				leader: "none",
+				flag: "none",
+				landmark: "none",
+				parentRegion: data.name ,
+				subregionNumber: 0,
+				regionLandmark: ["none"],
+
+				parentRegionID: ParentRegionObjectId,
+				subregionsID: [],
+				isRoot: false
+			});
 
 
-			const objectId = new ObjectId(_id);
-			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
-			if(updated) return value.pop();
-			else return "";
+			const addedSub = await newSubregion.save();
+			let newSubregionIDArr = [...data.subregionsID]
+			newSubregionIDArr.push(addedSub._id)
+			const updatedPar = await Region.updateOne({_id: ParentRegionObjectId}, {["subregionsID"]: newSubregionIDArr});
+
+			 return "";
 		},
 		/** 
 			@param	 {object} args - a region objectID, an item objectID, field, and

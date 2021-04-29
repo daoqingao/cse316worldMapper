@@ -39,7 +39,7 @@ const typeDefs = gql `
 		deleteItem(itemId: String!, _id: String!): [Item]		
 		deleteRegion(_id: String!): Boolean
 		updateRegionField(_id: String!, field: String!, value: String!): String
-		updateRegionFieldSubregionID(_id: String!, field: String!, value: [String]): String
+		addSubregion(_id: String!,userID: String!): String
 		
 		
 		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]

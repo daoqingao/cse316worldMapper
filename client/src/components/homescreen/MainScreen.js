@@ -123,7 +123,7 @@ const MainScreen = (props) => {
     const [AddRegion] 			= useMutation(mutations.ADD_REGION);
     const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION);
     const [UpdateRegionsField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
-    const [UpdateRegionsFieldSubregionID] 	= useMutation(mutations.UPDATE_REGION_FIELD_SUBREGIONID, mutationOptions);
+    const [AddSubregion] 	= useMutation(mutations.ADD_SUBREGION, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -332,20 +332,20 @@ const MainScreen = (props) => {
 
 
 
-        const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]})
-        newSubregionID.push(data.addRegion._id)
+        // const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]})
+        // newSubregionID.push(data.addRegion._id)
 
 
-        const {data2} = await UpdateRegionsFieldSubregionID({variables: { _id: parentID, field:field, value: newSubregionID  }, refetchQueries: [{query: GET_DB_REGIONS}]})
+        const {data2} = await AddSubregion({variables: { _id: parentID, userID: props.user._id}, refetchQueries: [{query: GET_DB_REGIONS}]})
 
         if (data2) {
             setActiveRegion(activeRegion);
         }
 
 
-        //let transaction = new UpdateListField_Transaction(parentID, field, prevSubregionID, newSubregionID, UpdateRegionsFieldSubregionID);
+        //let transaction = new UpdateListField_Transaction(parentID, field, prevSubregionID, newSubregionID, AddSubregion);
 
-        // let transaction = new AddSubregion_Transaction(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,UpdateRegionsFieldSubregionID,DeleteRegion)
+        // let transaction = new AddSubregion_Transaction(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,AddSubregion,DeleteRegion)
         // props.tps.addTransaction(transaction);
         // tpsRedo();
 
@@ -388,7 +388,7 @@ const MainScreen = (props) => {
         // let value=[...activeRegion.subregionsID]
         // value.push(data.addRegion._id)
         //
-        // let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsFieldSubregionID);
+        // let transaction = new UpdateListField_Transaction(_id, field, prev, value, AddSubregion);
         //
         //
         // props.tps.addTransaction(transaction);
