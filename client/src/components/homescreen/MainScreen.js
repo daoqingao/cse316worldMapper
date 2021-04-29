@@ -16,6 +16,9 @@ import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import { UpdateListField_Transaction,
     SortItems_Transaction,
     UpdateListItems_Transaction,
+
+
+    AddSubregion_Transaction,
     ReorderItems_Transaction,
     EditSubregion_Transaction } 				from '../../utils/jsTPS';
 
@@ -263,10 +266,6 @@ const MainScreen = (props) => {
 
         const {data} = await AddRegion({variables: {region: region}, refetchQueries: [{query: GET_DB_REGIONS}]});
 
-
-
-
-
         if (data) {
             loadRegion(data.addRegion);
         }
@@ -282,6 +281,8 @@ const MainScreen = (props) => {
 
 
     const editSubregion=async (_id,field,value,prev) => {
+
+        console.log("called to edit")
 
         // let subregionID=_id
         // let flag = 0;
@@ -323,28 +324,83 @@ const MainScreen = (props) => {
 
         }
 
-        const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]});
-
-
-        let _id=activeRegion._id
+        let parentID=activeRegion._id
         let field="subregionsID"
-        let prev=activeRegion.subregionsID
-        let value=[...activeRegion.subregionsID]
-        value.push(data.addRegion._id)
 
-        let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsFieldSubregionID);
-
-
-        props.tps.addTransaction(transaction);
-        tpsRedo();
+        let prevSubregionID=activeRegion.subregionsID
+        let newSubregionID=[...activeRegion.subregionsID]
 
 
 
-        if (data) {
-            loadRegion(activeRegion);
+        const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]})
+        newSubregionID.push(data.addRegion._id)
+
+
+        const {data2} = await UpdateRegionsFieldSubregionID({variables: { _id: parentID, field:field, value: newSubregionID  }, refetchQueries: [{query: GET_DB_REGIONS}]})
+
+        if (data2) {
+            setActiveRegion(activeRegion);
         }
 
-        console.log("FINISH ADD")
+
+        //let transaction = new UpdateListField_Transaction(parentID, field, prevSubregionID, newSubregionID, UpdateRegionsFieldSubregionID);
+
+        // let transaction = new AddSubregion_Transaction(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,UpdateRegionsFieldSubregionID,DeleteRegion)
+        // props.tps.addTransaction(transaction);
+        // tpsRedo();
+
+
+
+
+
+        // let parentRegionID = activeRegion._id
+        // let parentRegionName = activeRegion.name
+        // let subregion = {
+        //     _id: '',
+        //     name: 'Untitled',
+        //     owner: props.user._id,
+        //
+        //     sortRule: 'task',
+        //     sortDirection: 1,
+        //
+        //     capital: "none1",
+        //     leader: "none",
+        //     flag: "none",
+        //     landmark: "none",
+        //     parentRegion: parentRegionName ,
+        //     subregionNumber: 0,
+        //     regionLandmark: ["none"],
+        //
+        //     parentRegionID: parentRegionID,
+        //     subregionsID: [],
+        //     isRoot: false
+        //
+        // }
+        //
+        //
+        //
+        // const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]});
+        //
+        //
+        // let _id=activeRegion._id
+        // let field="subregionsID"
+        // let prev=activeRegion.subregionsID
+        // let value=[...activeRegion.subregionsID]
+        // value.push(data.addRegion._id)
+        //
+        // let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsFieldSubregionID);
+        //
+        //
+        // props.tps.addTransaction(transaction);
+        // tpsRedo();
+        //
+        //
+        //
+        // if (data) {
+        //     loadRegion(activeRegion);
+        // }
+        //
+        // console.log("FINISH ADD")
 
 
     }

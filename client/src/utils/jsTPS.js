@@ -1,3 +1,4 @@
+import {GET_DB_REGIONS} from "../cache/queries";
 
 export class jsTPS_Transaction {
     constructor() {};
@@ -5,6 +6,50 @@ export class jsTPS_Transaction {
     undoTransaction () {};
 }
 /*  Handles list name changes, or any other top level details of a region that may be added   */
+
+export class AddSubregion_Transaction extends jsTPS_Transaction{
+    constructor(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,UpdateRegionsFieldSubregionID,DeleteRegion) {
+        super();
+        this.parentID = parentID
+        this.subregion = subregion
+        this.field=field
+        this.prevSubregionIDArr=prevSubregionID
+        this.newSubregionIDArr = newSubregionID
+
+        this.AddRegionFunc = AddRegion
+        this.updateRegionSubregionFunc = UpdateRegionsFieldSubregionID
+        this.deleteRegionFunc = DeleteRegion
+
+
+    }
+
+    async doTransaction() {
+        console.log("called to add subregion transaction")
+
+        const {data} = await this.AddRegionFunc({variables: {region: this.subregion}});
+
+        let newSubregionID = [...this.prevSubregionIDArr]
+        newSubregionID.push(data.addRegion._id)
+        this.newSubregionIDArr=newSubregionID
+        this.newSubregionID = data.addRegion._id
+
+        const { data2 } = await this.updateRegionSubregionFunc({ variables: { _id: this.parentID, field: this.field, value: newSubregionID  }});
+
+
+        return data;
+
+
+
+    }
+    async undoTransaction() {
+        const {data} = await this.deleteRegionFunc({ variables: { _id: this.newSubregionID }})
+        return data
+    }
+
+
+}
+
+
 export class UpdateListField_Transaction extends jsTPS_Transaction {
     constructor(_id, field, prev, update, callback) {
         super();

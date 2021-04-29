@@ -126,6 +126,7 @@ module.exports = {
 		**/
 		updateRegionField: async (_, args) => {
 
+			console.log("update region sub id")
 			const { field, value, _id } = args;
 			const objectId = new ObjectId(_id);
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
@@ -135,6 +136,7 @@ module.exports = {
 
 		updateRegionFieldSubregionID: async (_, args) => {
 
+			console.log("update region sub id")
 			const { field, value, _id } = args;
 
 
