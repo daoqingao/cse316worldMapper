@@ -323,9 +323,6 @@ const MainScreen = (props) => {
 
         }
 
-
-
-        //also need to change the parent region's children[] and link them together
         const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]});
 
 
@@ -336,6 +333,8 @@ const MainScreen = (props) => {
         value.push(data.addRegion._id)
 
         let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateRegionsFieldSubregionID);
+
+
         props.tps.addTransaction(transaction);
         tpsRedo();
 
@@ -372,6 +371,12 @@ const MainScreen = (props) => {
 
     }
 
+    const returnHome=() => {
+        console.log("return Home")
+        toggleShowRegionTable(false)
+        toggleShowMapRegion(true)
+    }
+
 
     return (
         <WLayout wLayout="header-lside-rside">
@@ -379,7 +384,9 @@ const MainScreen = (props) => {
                 <WNavbar color="colored">
                     <ul>
                         <WNavItem>
-                            <Logo className='logo' />
+                            <Logo className='logo'
+                                returnHome={returnHome}
+                            />
                         </WNavItem>
                     </ul>
                     <ul>
