@@ -3,7 +3,7 @@ import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
 import Update from "../modals/Update";
 
-import MainRegionTable 					from '../main/MainRegionTable';
+import MainRegionTable 					from '../regionTable/MainRegionTable';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import * as mutations 					from '../../cache/mutations';
@@ -23,7 +23,11 @@ import { UpdateListField_Transaction,
     EditSubregion_Transaction } 				from '../../utils/jsTPS';
 
 import MapScreen from "./MapScreen";
+import RegionViewerMain from "../regionViewer/RegionViewerMain";
+
+
 import globe from "../icons/logo512.png"
+import TableEntry from "../regionTable/TableEntry";
 
 const MainScreen = (props) => {
 
@@ -53,11 +57,15 @@ const MainScreen = (props) => {
     const [showCreate, toggleShowCreate] 	= useState(false);
     const [showUpdate, toggleShowUpdate] 	= useState(false);
 
+
+    const [regionViewerID, setRegionViewerID] = useState({});
     const [showMapRegion, toggleShowMapRegion] 	= useState(false);
-
     const [showRegionTable, toggleShowRegionTable] 	= useState(false);
+    const [showRegionViewer, toggleShowRegionViewer] 	= useState(false);
 
-    const [username, setUsername] 	= useState("");
+
+
+
 
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
     const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
@@ -431,11 +439,24 @@ const MainScreen = (props) => {
         console.log("return Home")
         toggleShowRegionTable(false)
         toggleShowMapRegion(true)
+        toggleShowRegionViewer (false)
+    }
+
+    const showToRegionViewer =(_id) => {
+        console.log("show regionViewer")
+        toggleShowRegionTable(false)
+        toggleShowRegionViewer(true)
+        setRegionViewerID(_id)
+
+
+
+
+
     }
 
 
     return (
-        <WLayout wLayout="header-lside-rside">
+        <WLayout wLayout="header">
             <WLHeader>
                 <WNavbar color="colored">
                     <ul>
@@ -463,7 +484,7 @@ const MainScreen = (props) => {
 
 
 
-{ !auth && <WLMain>
+{ !auth &&  <WLMain>
  {
             <div className="centerGlobe">
                 {/*<img src={globe}/>*/}
@@ -473,7 +494,7 @@ const MainScreen = (props) => {
             </div>}
 </WLMain>}
 
-            {(!showRegionTable && auth) && <WLMain>
+            {(!showRegionTable && !showRegionViewer && auth) && <WLMain>
 
                 {
                     (<MapScreen
@@ -511,7 +532,7 @@ const MainScreen = (props) => {
                             addSubregion ={addSubregion}
                             deleteSubregion ={deleteSubregion}
                             changeRegion={(_id) => changeRegion(_id)}
-
+                            showRegionViewer={(_id) =>  showToRegionViewer(_id)}
                         />
                     </div>
                 }
@@ -519,6 +540,15 @@ const MainScreen = (props) => {
 
             }
 
+
+
+            {(showRegionViewer && auth ) &&                      <WLMain>
+                <RegionViewerMain
+                    regionViewerID = {regionViewerID}
+                    allRegions = {regions}
+
+                />
+            </WLMain>          }
 
 
             {
@@ -530,7 +560,7 @@ const MainScreen = (props) => {
             }
 
             {
-                showLogin && (<Login setShowMapRegion={setShowMapRegion} user={props.user} username = {username} setUsername = {(name) => setUsername((name)) } fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+                showLogin && (<Login setShowMapRegion={setShowMapRegion} user={props.user}  fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
             }
 
             {

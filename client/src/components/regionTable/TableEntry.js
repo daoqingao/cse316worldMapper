@@ -76,7 +76,7 @@ const TableEntry = (props) => {
                         ? <WInput
                             className='table-input' onBlur={handleCapitalEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)}}
-                            autoFocus={true} defaultValue={name} type='text'
+                            autoFocus={true} defaultValue={capital} type='text'
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
@@ -93,7 +93,7 @@ const TableEntry = (props) => {
                         ? <WInput
                             className='table-input' onBlur={handleLeaderEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
-                            autoFocus={true} defaultValue={name} type='text'
+                            autoFocus={true} defaultValue={leader} type='text'
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
@@ -114,7 +114,7 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 {
-                    <div className="table-text">
+                    <div className="table-text" onClick = {() => props.showRegionViewer(data._id)}>
                         {landmarks}
                     </div>
 

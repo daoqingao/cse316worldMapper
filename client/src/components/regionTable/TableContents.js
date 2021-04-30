@@ -22,6 +22,7 @@ const TableContents = (props) => {
     let entryCount = 0;
 
 
+
     if(subregionIDs!== undefined){
         subregionIDs.forEach( (subregionID) => {
                 allRegions.forEach( (region) => {
@@ -46,6 +47,10 @@ const TableContents = (props) => {
                         editSubregion ={props.editSubregion}
                         deleteSubregion ={props.deleteSubregion}
                         changeRegion={(_id) => props.changeRegion(_id)}
+
+                        showRegionViewer={(_id) =>  props.showRegionViewer(_id)}
+
+
                     />
                 ))
             }

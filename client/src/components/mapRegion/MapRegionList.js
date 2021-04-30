@@ -3,11 +3,14 @@ import MapRegionEntry from './MapRegionEntry';
 
 const MapRegionList = (props) => {
     let tempID = 0
+
+    let isEmpty = props.listIDs[0]===undefined
+
     return (
         <>
             {
 
-                props.listIDs &&
+                props.listIDs&& !isEmpty &&
                 props.listIDs.map(entry => (
                     entry.isRoot?
                     <MapRegionEntry

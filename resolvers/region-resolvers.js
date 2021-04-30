@@ -151,13 +151,13 @@ module.exports = {
 				sortRule: 'task',
 				sortDirection: 1,
 
-				capital: "none1",
+				capital: "none",
 				leader: "none",
 				flag: "none",
 				landmark: "none",
 				parentRegion: data.name ,
 				subregionNumber: 0,
-				regionLandmark: ["none"],
+				regionLandmark: ["a","b","c"],
 
 				parentRegionID: ParentRegionObjectId,
 				subregionsID: [],

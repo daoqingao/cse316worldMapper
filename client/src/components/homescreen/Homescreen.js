@@ -1,7 +1,7 @@
 // import Logo 							from '../navbar/Logo';
 // import Login 							from '../modals/Login';
 // import Delete 							from '../modals/Delete';
-// import MainRegionTable 					from '../main/MainRegionTable';
+// import MainRegionTable 					from '../regionTable/MainRegionTable';
 // import CreateAccount 					from '../modals/CreateAccount';
 // import NavbarOptions 					from '../navbar/NavbarOptions';
 // import * as mutations 					from '../../cache/mutations';
