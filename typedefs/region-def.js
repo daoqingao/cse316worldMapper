@@ -35,7 +35,11 @@ const typeDefs = gql `
 	}
 	extend type Mutation {
 		addItem(item: ItemInput!, _id: String!, index: Int!): String
+		
+		
 		addRegion(region: RegionInput!): Region
+		
+		
 		deleteItem(itemId: String!, _id: String!): [Item]		
 		deleteRegion(_id: String!): Boolean
 		updateRegionField(_id: String!, field: String!, value: String!): String

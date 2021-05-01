@@ -28,13 +28,9 @@ const MapRegionEntry = (props) => {
     
     return (
         <WNavItem
-            className={entryStyle} onDoubleClick={                handleEditing }
+            className={entryStyle} onDoubleClick={      handleSetActive        }
             onClick={
-                handleSetActive
-
-
-
-
+                handleEditing
 
             }
         >

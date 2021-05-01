@@ -6,6 +6,9 @@ import TableEntry from "./TableEntry";
 const MainRegionTable = (props) => {
     return (
         <div className='table ' >
+            <div className="tableName">
+                Region: {props.activeRegion.name}
+            </div>
             <TableHeader
                 disabled={!props.activeRegion._id}        addItem={props.addItem}
                 undo={props.undo} redo={props.redo}     canUndo={props.canUndo} 

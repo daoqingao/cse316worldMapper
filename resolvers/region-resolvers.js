@@ -61,7 +61,6 @@ module.exports = {
 		**/
 		addRegion: async (_, args) => {
 			// THIS IS ONLY USE TO ADD ROOT MAPS REGION
-			console.log("First ")
 
 			const { region: region } = args;
 			const objectId = new ObjectId();

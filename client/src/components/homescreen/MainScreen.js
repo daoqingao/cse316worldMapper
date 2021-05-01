@@ -12,7 +12,7 @@ import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
+import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol} from 'wt-frontend';
 import { UpdateListField_Transaction,
     SortItems_Transaction,
     UpdateListItems_Transaction,
@@ -28,6 +28,7 @@ import RegionViewerMain from "../regionViewer/RegionViewerMain";
 
 import globe from "../icons/logo512.png"
 import TableEntry from "../regionTable/TableEntry";
+import RegionNavigator from "../navbar/RegionNavigator";
 
 const MainScreen = (props) => {
 
@@ -459,26 +460,46 @@ const MainScreen = (props) => {
         <WLayout wLayout="header">
             <WLHeader>
                 <WNavbar color="colored">
-                    <ul>
+
+                    <WCol size={"4"}>
                         <WNavItem>
                             <Logo className='logo'
-                                returnHome={returnHome}
+                                  returnHome={returnHome}
                             />
                         </WNavItem>
-                    </ul>
-                    <ul>
-                        <NavbarOptions
-                            fetchUser={props.fetchUser} 	auth={auth}
-                            setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
-                            reloadTodos={refetch} 			setActiveList={loadRegion}
-
-                            setShowUpdate={setShowUpdate}
-                            user={props.user}
+                    </WCol>
 
 
+                    <WCol size={"4"}>
+                        <WNavItem>
+                            <RegionNavigator
+                            regions ={regions}
+                            activeRegion={activeRegion}
+                            auth = {auth}
 
-                        />
-                    </ul>
+                            showRegionTable = {showRegionTable}
+                            showRegionViewer = {showRegionViewer}
+
+                            changeRegion={(_id) => changeRegion(_id)}
+                            />
+                        </WNavItem>
+                    </WCol>
+
+
+
+                    <WCol size={"4"}>
+                        <ul>
+                            <NavbarOptions
+                                fetchUser={props.fetchUser} 	auth={auth}
+                                setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
+                                reloadTodos={refetch} 			setActiveList={loadRegion}
+                                setShowUpdate={setShowUpdate}
+                                user={props.user}
+                            />
+                        </ul>
+                    </WCol>
+
+
                 </WNavbar>
             </WLHeader>
 
