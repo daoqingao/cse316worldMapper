@@ -27,30 +27,39 @@ const MapRegionEntry = (props) => {
     const entryStyle = props._id === props.activeid ? 'list-item-active' : 'list-item ';
     
     return (
-        <WNavItem
-            className={entryStyle} onDoubleClick={      handleSetActive        }
-            onClick={
-                handleEditing
 
-            }
-        >
-            {
-                editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
-                                onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
-                                name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
+        <WRow>
+            <WCol size={9}>
+                <WNavItem
+                    className={entryStyle} onDoubleClick={      handleSetActive        }
+                    onClick={
+                        handleEditing
+
+                    }
+                >
+                    {
+                        editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
+                                            onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
+                                            name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name}
                             />
-                        :
-                    <div>
-                        <div className='list-text'>
-                            {props.name}
-                            <WButton className='mapDeleteButton' onClick={() => props.deleteMapRegion(props._id)}>
-                                <i className="material-icons mapDeleteButton">delete</i>
-                            </WButton>
-                        </div>
-                    </div>
+                            :
+                            <div className='list-text'>
+                                {props.name}
 
-            }
-        </WNavItem >
+                            </div>
+
+
+                    }
+                </WNavItem >
+            </WCol>
+
+            <WCol>
+                <WButton className='mapDeleteButton' onClick={() => props.deleteMapRegion(props._id)}>
+                    <i className="material-icons mapDeleteButton">delete</i>
+                </WButton>
+            </WCol>
+        </WRow>
+
     );
 };
 
