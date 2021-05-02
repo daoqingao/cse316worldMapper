@@ -15,6 +15,9 @@ const MapRegionEntry = (props) => {
     const handleSubmit = (e) => {
         handleEditing(e);
         const { name, value } = e.target;
+
+        console.log(name)
+        console.log(value)
         props.updateListField(props._id, name, value, preEdit);
     };
 
@@ -31,9 +34,10 @@ const MapRegionEntry = (props) => {
         <WRow>
             <WCol size={9}>
                 <WNavItem
-                    className={entryStyle} onDoubleClick={      handleSetActive        }
+                    className={entryStyle} onDoubleClick={                             handleEditing        }
                     onClick={
-                        handleEditing
+                        handleSetActive
+
 
                     }
                 >
@@ -56,6 +60,11 @@ const MapRegionEntry = (props) => {
             <WCol>
                 <WButton className='mapDeleteButton' onClick={() => props.deleteMapRegion(props._id)}>
                     <i className="material-icons mapDeleteButton">delete</i>
+                </WButton>
+            </WCol>
+            <WCol>
+                <WButton className='mapDeleteButton' onClick={  handleEditing  }>
+                    <i className="material-icons mapDeleteButton">edit</i>
                 </WButton>
             </WCol>
         </WRow>

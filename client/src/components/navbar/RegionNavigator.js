@@ -7,7 +7,7 @@ import MainRegionTable from "../regionTable/MainRegionTable";
 const RegionNavigator = (props) => {
 
 
-    console.log(props.activeRegion)
+
 
     let linkListPath=[props.activeRegion];
 
@@ -32,8 +32,6 @@ const RegionNavigator = (props) => {
     linkListPath.pop()
 
 
-    console.log("This is the path to root")
-    console.log(linkListPath)
 
 
     if(!props.showRegionTable && !props.showRegionViewer)

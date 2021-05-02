@@ -22,13 +22,14 @@ import { UpdateListField_Transaction,
     ReorderItems_Transaction,
     EditSubregion_Transaction } 				from '../../utils/jsTPS';
 
-import MapScreen from "./MapScreen";
+import MapScreen from "../mapRegion/MapScreen";
 import RegionViewerMain from "../regionViewer/RegionViewerMain";
 
 
 import globe from "../icons/logo512.png"
 import TableEntry from "../regionTable/TableEntry";
 import RegionNavigator from "../navbar/RegionNavigator";
+import CreateMap from "../modals/CreateMap";
 
 const MainScreen = (props) => {
 
@@ -64,7 +65,7 @@ const MainScreen = (props) => {
     const [showRegionTable, toggleShowRegionTable] 	= useState(false);
     const [showRegionViewer, toggleShowRegionViewer] 	= useState(false);
 
-
+    const [showCreateMap, setShowCreateMap] 	= useState(false);
 
 
 
@@ -282,6 +283,41 @@ const MainScreen = (props) => {
         console.log("FINISH ADD")
     }
 
+
+    const createNewMapRegionWithName = async (name) => {
+
+
+        let region = {
+            _id: '',
+            name: name,
+            owner: props.user._id,
+
+            sortRule: 'task',
+            sortDirection: 1,
+
+            capital: "none1",
+            leader: "none",
+            flag: "none",
+            landmark: "none",
+            parentRegion: "none",
+            subregionNumber: 0,
+            regionLandmark: ["none"],
+
+            parentRegionID: '',
+            subregionsID: [],
+            isRoot: true
+
+        }
+
+        const {data} = await AddRegion({variables: {region: region}, refetchQueries: [{query: GET_DB_REGIONS}]});
+
+        if (data) {
+            loadRegion(data.addRegion);
+        }
+
+    }
+
+
     const deleteMapRegion=async (_id) => {
         DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
     }
@@ -357,59 +393,6 @@ const MainScreen = (props) => {
         // let transaction = new AddSubregion_Transaction(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,AddSubregion,DeleteRegion)
         // props.tps.addTransaction(transaction);
         // tpsRedo();
-
-
-
-
-
-        // let parentRegionID = activeRegion._id
-        // let parentRegionName = activeRegion.name
-        // let subregion = {
-        //     _id: '',
-        //     name: 'Untitled',
-        //     owner: props.user._id,
-        //
-        //     sortRule: 'task',
-        //     sortDirection: 1,
-        //
-        //     capital: "none1",
-        //     leader: "none",
-        //     flag: "none",
-        //     landmark: "none",
-        //     parentRegion: parentRegionName ,
-        //     subregionNumber: 0,
-        //     regionLandmark: ["none"],
-        //
-        //     parentRegionID: parentRegionID,
-        //     subregionsID: [],
-        //     isRoot: false
-        //
-        // }
-        //
-        //
-        //
-        // const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]});
-        //
-        //
-        // let _id=activeRegion._id
-        // let field="subregionsID"
-        // let prev=activeRegion.subregionsID
-        // let value=[...activeRegion.subregionsID]
-        // value.push(data.addRegion._id)
-        //
-        // let transaction = new UpdateListField_Transaction(_id, field, prev, value, AddSubregion);
-        //
-        //
-        // props.tps.addTransaction(transaction);
-        // tpsRedo();
-        //
-        //
-        //
-        // if (data) {
-        //     loadRegion(activeRegion);
-        // }
-        //
-        // console.log("FINISH ADD")
 
 
     }
@@ -526,6 +509,11 @@ const MainScreen = (props) => {
                         deleteMapRegion={(_id) => (deleteMapRegion(_id))}
                         setShowMapRegion={setShowMapRegion}
                         setShowRegionTable={(_id)=> setShowRegionTable(_id)}
+
+                        setShowCreateMap = { setShowCreateMap}
+                        showCreateMap = {showCreateMap}
+
+                        createNewMapRegionWithName = {createNewMapRegionWithName}
                     />)
                 }
             </WLMain>}

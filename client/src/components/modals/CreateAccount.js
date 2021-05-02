@@ -49,15 +49,10 @@ const CreateAccount = (props) => {
 			{
 				loading ? <div />
 					: <WMMain>
-							<WRow className="modal-col-gap signup-modal">
-								<WCol size="6">
-									<WInput 
-										className="" onBlur={updateInput} name="name" labelAnimation="up"
-										barAnimation="solid" labelText="name" wType="outlined" inputType="text"
-									/>
-								</WCol>
-
-							</WRow>
+						<WInput
+							className="modal-input" onBlur={updateInput} name="name" labelAnimation="up"
+							barAnimation="solid" labelText="name" wType="outlined" inputType="text"
+						/>
 
 							<div className="modal-spacer">&nbsp;</div>
 							<WInput 

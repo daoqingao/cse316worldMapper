@@ -6,11 +6,20 @@ import {WModal, WMHeader, WMMain, WMFooter, WButton, WInput, WRow, WCol} from 'w
 
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import globe from "../icons/logo512.png";
-import MapRegionContents from "../mapRegion/MapRegionContents";
-import MapRegionEntry from "../mapRegion/MapRegionEntry";
+import MapRegionContents from "./MapRegionContents";
+import MapRegionEntry from "./MapRegionEntry";
+import CreateMap from "../modals/CreateMap"
+
 
 const MapScreen = (props) => {
 
+
+
+
+    const handleCreateNewMap = () => {
+
+        props.setShowCreateMap(true)
+    }
     return (
         <WLayout wLayout="header" style={{color:"white"}}>
             <WLHeader>
@@ -45,13 +54,22 @@ const MapScreen = (props) => {
                         </WRow>
                         <WRow size="6">
 
-                                <WButton  onClick={props.createNewList} style={{float:"right"}}>Add new Map</WButton>
+                                <WButton  onClick={() => handleCreateNewMap()} style={{float:"right"}}>Add new Map</WButton>
                         </WRow>
                     </WCol>
                 </WRow>
 
             </WMMain>
+            {
+            props.showCreateMap && (<CreateMap
 
+                setShowCreateMap = { props.setShowCreateMap}
+                showCreateMap = {props.showCreateMap}
+                updateListField={props.updateListField}
+                createNewRegion = {        props.createNewList}
+                createNewMapRegionWithName={props.createNewMapRegionWithName}
+            />)
+            }
         </WLayout>
     );
 }
