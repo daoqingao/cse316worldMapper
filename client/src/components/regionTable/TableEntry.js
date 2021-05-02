@@ -121,8 +121,17 @@ const TableEntry = (props) => {
                 }
             </WCol>
 
+            <WCol size="1">
+                {
+                    <div className="table-text" onClick = {() => props.changeRegion(data._id)}>
+                        Navigate To Subregion
+                    </div>
 
-            <WCol size="2">
+                }
+            </WCol>
+
+
+            <WCol size="1">
                 <div className='button-group'>
                     {/*<WButton className={canMoveUp ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveUp ? () => props.reorderItem(data._id, -1) : disabledButton } wType="texted">*/}
                     {/*    <i className="material-icons">expand_less</i>*/}

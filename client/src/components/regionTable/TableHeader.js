@@ -26,24 +26,30 @@ const TableHeader = (props) => {
 
         <div>
             <WRow>
-                <WCol size={"6"}>
+                <WCol size={"3"}>
                     <div className="table-header-buttons">
+                        <WButton onClick={ props.addSubregion} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
+                            <i className="material-icons">add_box</i>
+                        </WButton>
                         <WButton {...undoOptions}>
                             <i className="material-icons">undo</i>
                         </WButton>
                         <WButton  {...redoOptions}>
                             <i className="material-icons">redo</i>
                         </WButton>
-                        <WButton onClick={ props.addSubregion} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
-                            <i className="material-icons">add_box</i>
-                        </WButton>
-                        <WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
-                            <i className="material-icons">delete_outline</i>
-                        </WButton>
-                        <WButton onClick={props.disabled ? clickDisabled : () => props.setActiveList({})} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
-                            <i className="material-icons">close</i>
-                        </WButton>
+
+
+
+                        {/*<WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>*/}
+                        {/*    <i className="material-icons">delete_outline</i>*/}
+                        {/*</WButton>*/}
+                        {/*<WButton onClick={props.disabled ? clickDisabled : () => props.setActiveList({})} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>*/}
+                        {/*    <i className="material-icons">close</i>*/}
+                        {/*</WButton>*/}
                     </div>
+                </WCol>
+                <WCol size={"2"}>
+
                 </WCol>
                 <WCol size={"6"}>
                     <div className="tableName">
