@@ -464,6 +464,10 @@ const MainScreen = (props) => {
                             showRegionViewer = {showRegionViewer}
 
                             changeRegion={(_id) => changeRegion(_id)}
+
+                            setShowRegionViewer = {toggleShowRegionViewer}
+                            setShowRegionTable={toggleShowRegionTable}
+
                             />
                         </WNavItem>
                     </WCol>
@@ -512,6 +516,9 @@ const MainScreen = (props) => {
                         setShowRegionTable={(_id)=> setShowRegionTable(_id)}
 
                         setShowCreateMap = { setShowCreateMap}
+                        setShowDelete = {setShowDelete}
+                        showDelete={showDelete}
+
                         showCreateMap = {showCreateMap}
 
                         createNewMapRegionWithName = {createNewMapRegionWithName}
@@ -561,9 +568,7 @@ const MainScreen = (props) => {
             </WLMain>          }
 
 
-            {
-                showDelete && (<Delete deleteList={deleteList} activeid={activeRegion._id} setShowDelete={setShowDelete} />)
-            }
+
 
             {
                 showCreate && (<CreateAccount fetchUser={props.fetchUser} setShowCreate={setShowCreate} />)

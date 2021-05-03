@@ -1,7 +1,8 @@
 import React, { useState }  from 'react';
-import { WNavItem, WInput } from 'wt-frontend';
+import {WNavItem, WInput, WLayout} from 'wt-frontend';
 import * as ALl from 'wt-frontend';
 import {WModal, WMHeader, WMMain, WMFooter, WButton, WRow, WCol} from 'wt-frontend';
+import Delete from "../modals/Delete";
 
 const MapRegionEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
@@ -26,6 +27,16 @@ const MapRegionEntry = (props) => {
         props.setShowMapRegion()
         props.setShowRegionTable(props._id)
     }
+
+
+    const handleDelete = (e) => {
+        props.setShowDelete(true)
+        props.setDeleteID(props._id)
+
+        // props.deleteMapRegion(props._id)
+    }
+
+
 
     const entryStyle = props._id === props.activeid ? 'list-item-active' : 'list-item ';
     
@@ -58,7 +69,7 @@ const MapRegionEntry = (props) => {
             </WCol>
 
             <WCol>
-                <WButton className='mapDeleteButton' onClick={() => props.deleteMapRegion(props._id)}>
+                <WButton className='mapDeleteButton' onClick={handleDelete}>
                     <i className="material-icons mapDeleteButton">delete</i>
                 </WButton>
             </WCol>
@@ -67,7 +78,9 @@ const MapRegionEntry = (props) => {
                     <i className="material-icons mapDeleteButton">edit</i>
                 </WButton>
             </WCol>
+
         </WRow>
+
 
     );
 };

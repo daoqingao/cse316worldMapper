@@ -60,7 +60,7 @@ const RegionViewerMain = (props) => {
                                 {currentRegionViewer.parentRegion}
                             </WCol>
                             <WCol size={"1"}>
-                                <i className="material-icons" >public</i>
+                                <i className="material-icons" >edit</i>
                             </WCol>
 
                         </WRow>

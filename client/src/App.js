@@ -1,5 +1,5 @@
 import React 			from 'react';
-import Homescreen 		from './components/homescreen/Homescreen';
+
 import MainScreen from './components/homescreen/MainScreen';
 
 import { useQuery } 	from '@apollo/client';
@@ -27,13 +27,13 @@ const App = () => {
 			<Switch>
 				<Redirect exact from="/" to={ {pathname: "/home"} } />
 
-				<Route
-					path="/maps"
-					name="maps"
-					render={() =>
-						<Homescreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
-					}
-				/>
+				{/*<Route*/}
+				{/*	path="/maps"*/}
+				{/*	name="maps"*/}
+				{/*	render={() =>*/}
+				{/*		<Homescreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>*/}
+				{/*	}*/}
+				{/*/>*/}
 
 				<Route
 					path="/home"

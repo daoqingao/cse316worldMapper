@@ -16,6 +16,8 @@ const MapRegionContents = (props) => {
                 deleteMapRegion={(_id) => (props.deleteMapRegion(_id))}
                 setShowMapRegion=  {props.setShowMapRegion}
                 setShowRegionTable={(_id)=> props.setShowRegionTable(_id)}
+                setShowDelete = {props.setShowDelete}
+                showDelete={props.showDelete}
             />
         </>
     );

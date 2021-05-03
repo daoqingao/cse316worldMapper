@@ -3,6 +3,7 @@ import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WButton} from 'wt-frontend';
 import RegionNavigatorEntry from './RegionNavigatorEntry'
 import MainRegionTable from "../regionTable/MainRegionTable";
+import RegionViewerMain from "../regionViewer/RegionViewerMain";
 
 const RegionNavigator = (props) => {
 
@@ -29,7 +30,7 @@ const RegionNavigator = (props) => {
     }
 
     linkListPath.reverse()
-    linkListPath.pop()
+
 
 
 
@@ -47,6 +48,9 @@ const RegionNavigator = (props) => {
                 <RegionNavigatorEntry
                 entry = {entry}
                 changeRegion={(_id) => props.changeRegion(_id)}
+
+                setShowRegionViewer = {props.setShowRegionViewer}
+                setShowRegionTable=   {props.setShowRegionTable}
                 />
             ))
             }
