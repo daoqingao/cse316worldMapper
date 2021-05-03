@@ -491,9 +491,10 @@ const MainScreen = (props) => {
 { !auth &&  <WLMain>
  {
             <div className="centerGlobe">
-                {/*<img src={globe}/>*/}
+
 
                 <i className="material-icons another" >public</i>
+                <br></br>
                 Welcome To The World Data Mapper
             </div>}
 </WLMain>}

@@ -24,7 +24,10 @@ const RegionViewerMain = (props) => {
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
-                Insert undo redo buttons here
+
+                <i className="material-icons">undo</i>
+                <i className="material-icons">redo</i>
+
             </WLHeader>
             <WLMain>
                 <WRow>
