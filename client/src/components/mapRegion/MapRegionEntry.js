@@ -32,7 +32,6 @@ const MapRegionEntry = (props) => {
     const handleDelete = (e) => {
         props.setShowDelete(true)
         props.setDeleteID(props._id)
-
         // props.deleteMapRegion(props._id)
     }
 
