@@ -275,6 +275,58 @@ module.exports = {
 
 		},
 
+		addLandmark: async (_, args) => {
+			const { regionID,landmarkName,index,op} = args;
+if(op===1){
+
+
+	const data = await Region.findOne({_id: regionID});
+
+
+	let newLandmarkArr = [...data.regionLandmark]
+	if(index===-1)
+		newLandmarkArr.push(landmarkName)
+	else
+		newLandmarkArr.splice(index,0,landmarkName)
+
+	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+	return""
+}
+else if(op===-1)
+{
+	if(index===-1){
+		const data = await Region.findOne({_id: regionID});
+		let newLandmarkArr = [...data.regionLandmark]
+		newLandmarkArr.splice(newLandmarkArr.length-1,1)
+		const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+		return""
+	}
+
+	const data = await Region.findOne({_id: regionID});
+	let newLandmarkArr = [...data.regionLandmark]
+	let oldLandmark=newLandmarkArr[index]
+	newLandmarkArr.splice(index,1)
+	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+	return oldLandmark
+}
+else if(op===2){
+	const data = await Region.findOne({_id: regionID});
+	let newLandmarkArr = [...data.regionLandmark]
+	let oldLandmark=newLandmarkArr[index]
+	newLandmarkArr.splice(index,1,landmarkName)
+	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+	return oldLandmark
+}
+
+		},
+
+
+
+
+
+
+
+
 		sortItems: async (_, args) => {
 			console.log("sorting")
 			const { _id, criteria } = args;

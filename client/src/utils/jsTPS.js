@@ -7,6 +7,49 @@ export class jsTPS_Transaction {
 }
 /*  Handles list name changes, or any other top level details of a region that may be added   */
 
+export class ModifyLandmark_Transaction extends jsTPS_Transaction{
+    constructor(regionID,landmarkName,index,op,AddLandmark) {
+        super();
+        this.regionID = regionID
+        this.landmarkName=landmarkName
+        this.index=index
+        this.op=op
+        this.AddLandmark=AddLandmark
+
+    }
+
+    async doTransaction() {
+
+        if(this.op===1){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.landmarkName , index: this.index ,op:1}})
+        }
+        else if (this.op===-1){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.landmarkName , index: this.index ,op:-1}})
+            this.oldLandmark=(data.addLandmark)
+        }
+        else if( this.op===2){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.landmarkName , index: this.index ,op:2}})
+            this.oldLandmark=(data.addLandmark)
+        }
+        return "garbage data"
+
+    }
+    async undoTransaction() {
+        if(this.op===1){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.landmarkName , index: -1 ,op:-1}})
+        }
+        else if (this.op===-1){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.oldLandmark , index: this.index ,op:1}})
+
+        }
+        else if( this.op===2){
+            const {data} = await this.AddLandmark({variables: {regionID: this.regionID, landmarkName:this.oldLandmark , index: this.index ,op:2}})
+
+        }
+        return "garbage data"
+    }
+}
+
 export class DeleteSubregion_Transaction extends jsTPS_Transaction{
     constructor(parentID,subregionID,DeleteSubArr,SetSubArr,previous) {
         super();

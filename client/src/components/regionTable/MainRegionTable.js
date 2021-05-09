@@ -12,7 +12,8 @@ const MainRegionTable = (props) => {
                 activeRegion = {props.activeRegion}
                 disabled={props.activeRegion.subregionsID.length===0}        addItem={props.addItem}
                 undo={props.undo} redo={props.redo}     canUndo={props.canUndo} 
-                canRedo={props.canRedo}                 setShowDelete={props.setShowDelete}
+                canRedo={props.canRedo}
+                setShowDelete={props.setShowDelete}
                 setActiveList={props.setActiveList}     sort={props.sort}
 
                 addSubregion = {props.addSubregion}

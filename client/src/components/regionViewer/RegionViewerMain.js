@@ -1,5 +1,5 @@
-import React            from 'react';
-import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol , WMMain, WLFooter, WInput}  from 'wt-frontend';
+import React, {useState} from 'react';
+import {WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WMMain, WLFooter, WInput, WButton} from 'wt-frontend';
 import RegionViewerLandmarkTable from "./RegionViewerLandmarkTable";
 
 const RegionViewerMain = (props) => {
@@ -9,8 +9,8 @@ const RegionViewerMain = (props) => {
 
     let currentRegionViewer;
 
-    console.log(allRegions)
-    console.log(regionViewerID)
+    // console.log(allRegions)
+    // console.log(regionViewerID)
     allRegions.forEach(
         x => {
             if (x._id===regionViewerID){
@@ -19,14 +19,51 @@ const RegionViewerMain = (props) => {
         }
     )
 
+    const [input,setInput]= useState("")
+    const updateInput = (e) => {
 
-    console.log()
+        setInput(e.target.value)
+
+    };
+
+    const handleAddLandmark = () => {
+        if(input==="")
+            return
+        props.addRegionLandmark(input,regionViewerID,1,-1)
+    }
+    let indexCounter=0;
+
+
+    const clickDisabled = () => { };
+
+    const undoOptions = {
+        className:!props.canUndo ? ' navButtonDisable ' : 'navButton',
+        onClick: !props.canUndo  ? clickDisabled : props.undo,
+        wType: "texted",
+        clickAnimation: !props.canUndo ? "" : "ripple-light",
+        shape: "rounded"
+    }
+
+    const redoOptions = {
+        className:!props.canRedo ? ' table-header-button-disabled ' : 'table-header-button ',
+        onClick:  !props.canRedo   ? clickDisabled : props.redo,
+        wType: "texted",
+        clickAnimation: !props.canRedo ? "" : "ripple-light" ,
+        shape: "rounded"
+    }
+
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
 
-                <i className="material-icons">undo</i>
-                <i className="material-icons">redo</i>
+                <WButton {...undoOptions}>
+                    <i className="material-icons">undo</i>
+                </WButton>
+                <WButton  {...redoOptions}>
+                    <i className="material-icons">redo</i>
+                </WButton>
+
+
 
             </WLHeader>
             <WLMain>
@@ -109,8 +146,16 @@ const RegionViewerMain = (props) => {
                                     currentRegionViewer.regionLandmark.map(entry => (
                                         <RegionViewerLandmarkTable
                                             entry ={entry}
-                                            landmarks={currentRegionViewer.regionLandmark}/>
-                                    ))
+                                            landmarks={currentRegionViewer.regionLandmark}
+                                            addRegionLandmark={props.addRegionLandmark}
+                                            regionViewerID={regionViewerID}
+                                            indexCounter={indexCounter++}
+
+                                        />
+
+
+
+                                            ))
 
 
 
@@ -121,11 +166,18 @@ const RegionViewerMain = (props) => {
 
     <WRow>
         <WCol>
-            {/*<i className="material-icons" >add</i>*/}
+            <WButton                shape="pill"
+                                    hoverAnimation="darken"
+                                    clickAnimation="ripple-light"
+                                    onClick={handleAddLandmark}
+            >
+                <i className="material-icons">add</i>
+            </WButton>
+
         </WCol>
 
         <WCol size={"3"}>
-            <WInput
+            <WInput onBlur = {updateInput}
 
             />
         </WCol>

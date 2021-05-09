@@ -16,7 +16,7 @@ import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WButton} from 'wt-fronte
 import { UpdateListField_Transaction,
     SortItems_Transaction,
     UpdateListItems_Transaction,
-
+    ModifyLandmark_Transaction,
     DeleteSubregion_Transaction,
     AddSubregion_Transaction,
     ReorderItems_Transaction,
@@ -138,6 +138,7 @@ const MainScreen = (props) => {
     const [DeleteSubregionArraySingle] 	= useMutation(mutations.DELETE_SUBREGION_ARRAY, mutationOptions);
     const [AddSubregionArraySingle] 	= useMutation(mutations.ADD_SUBREGION_ARRAY, mutationOptions);
     const [SetSubregionArray] 	= useMutation(mutations.SET_SUBREGION_ARRAY, mutationOptions);
+    const [AddLandmark] 	= useMutation(mutations.ADD_LANDMARK, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -156,6 +157,9 @@ const MainScreen = (props) => {
             setCanUndo(props.tps.hasTransactionToUndo());
             setCanRedo(props.tps.hasTransactionToRedo());
         }
+
+
+
     }
 
     const addItem = async () => {
@@ -419,6 +423,16 @@ const MainScreen = (props) => {
 
     }
 
+    const addRegionLandmark = async (landmarkName,regionID,op,index) => {
+
+        let transaction = new ModifyLandmark_Transaction(regionID,landmarkName,index,op,AddLandmark)
+        props.tps.addTransaction(transaction);
+        tpsRedo();
+
+
+
+    }
+
 
     return (
         <WLayout wLayout="header">
@@ -557,6 +571,12 @@ const MainScreen = (props) => {
                 <RegionViewerMain
                     regionViewerID = {regionViewerID}
                     allRegions = {regions}
+
+                    addRegionLandmark = {addRegionLandmark}
+
+                    undo={tpsUndo} redo={tpsRedo}
+                    canUndo={canUndo}
+                    canRedo={canRedo}
 
                 />
             </WLMain>          }

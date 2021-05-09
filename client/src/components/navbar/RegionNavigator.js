@@ -47,7 +47,7 @@ const RegionNavigator = (props) => {
     }
 
     linkListPath.reverse()
-    linkListPath.pop()
+    // linkListPath.pop()
     let lastEle = linkListPath[linkListPath.length-1]
 
 
