@@ -58,6 +58,7 @@ const MainScreen = (props) => {
     const [showLogin, toggleShowLogin] 		= useState(false);
     const [showCreate, toggleShowCreate] 	= useState(false);
     const [showUpdate, toggleShowUpdate] 	= useState(false);
+    const [showDeleteSubregion, toggleShowDeleteSubregion] 	= useState(false);
 
 
     const [regionViewerID, setRegionViewerID] = useState({});
@@ -242,6 +243,14 @@ const MainScreen = (props) => {
 
     };
 
+    const setShowDeleteSubregion = () => {
+        toggleShowCreate(false);
+        toggleShowLogin(false);
+        toggleShowDeleteSubregion(!showDeleteSubregion)
+    };
+
+
+
     const sort = (criteria) => {
         let prevSortRule = sortRule;
         setSortRule(criteria);
@@ -359,10 +368,10 @@ const MainScreen = (props) => {
         tpsRedo();
     }
 
-    const deleteSubregion=async (subregion) => {
+    const deleteSubregion=async (subregionID) => {
 
         let parentID=activeRegion._id
-        let subregionID = subregion._id
+
 
         let transaction = new DeleteSubregion_Transaction(parentID,subregionID,DeleteSubregionArraySingle,SetSubregionArray,activeRegion.subregionsID)
 
@@ -520,6 +529,11 @@ const MainScreen = (props) => {
                             deleteSubregion ={deleteSubregion}
                             changeRegion={(_id) => changeRegion(_id)}
                             showRegionViewer={(_id) =>  showToRegionViewer(_id)}
+
+                            toggleShowDeleteSubregion = {setShowDeleteSubregion}
+                            setShowDeleteSubregion = {toggleShowDeleteSubregion}
+                            showDeleteSubregion={showDeleteSubregion}
+
                         />
                     </div>
                 }

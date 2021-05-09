@@ -1,6 +1,9 @@
-import React        from 'react';
+import React, {useState} from 'react';
 import TableEntry   from './TableEntry';
 import MainRegionTable from "./MainRegionTable";
+import Delete from "../modals/Delete";
+import DeleteSubregion from "../modals/DeleteSubregion";
+import MapRegionEntry from "../mapRegion/MapRegionEntry";
 
 const TableContents = (props) => {
 
@@ -11,6 +14,9 @@ const TableContents = (props) => {
     //     entryCount = entries.length
     // }
     //activeRegion is the data of the active region
+
+    const [deleteID, setDeleteID] 	= useState(false);
+
 
 
     let subregionIDs = props.activeRegion ? props.activeRegion.subregionsID : null;
@@ -50,18 +56,29 @@ const TableContents = (props) => {
 
                         showRegionViewer={(_id) =>  props.showRegionViewer(_id)}
 
+                        toggleShowDeleteSubregion = {props.setShowDeleteSubregion}
+                        setShowDeleteSubregion = {props.toggleShowDeleteSubregion}
+                        showDeleteSubregion={props.showDeleteSubregion}
+                        setDeleteID = {setDeleteID}
 
                     />
                 ))
             }
 
+                {
+                    props.showDeleteSubregion && (<DeleteSubregion deleteMapRegion={(_id) => (props.deleteSubregion(_id))} activeid={deleteID} setShowDeleteSubregion={props.setShowDeleteSubregion} />)
+                }
             </div>
+
             : <div className='container-primary' >
                 {
                     props.activeRegion._id ? <h2 className="nothing-msg"> No subregions yet</h2> : <></>
                 }               
                 
             </div>
+
+
+
     );
 };
 

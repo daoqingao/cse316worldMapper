@@ -31,6 +31,11 @@ const MainRegionTable = (props) => {
                 deleteSubregion ={props.deleteSubregion}
                 changeRegion={(_id) => props.changeRegion(_id)}
                 showRegionViewer={(_id) =>  props.showRegionViewer(_id)}
+
+                toggleShowDeleteSubregion = {props.setShowDeleteSubregion}
+                setShowDeleteSubregion = {props.toggleShowDeleteSubregion}
+                showDeleteSubregion={props.showDeleteSubregion}
+
             />
         </div>
     );

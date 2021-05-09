@@ -47,6 +47,13 @@ const TableEntry = (props) => {
         }
     };
 
+    const handleDeleteSubregion = (e) => {
+
+        props.setShowDeleteSubregion(true)
+        props.setDeleteID(data._id)
+        // props.deleteSubregion(data, props.index)
+    }
+
 
 
 
@@ -139,7 +146,7 @@ const TableEntry = (props) => {
                     {/*<WButton className={canMoveDown ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveDown ? () => props.reorderItem(data._id, 1) : disabledButton } wType="texted">*/}
                     {/*    <i className="material-icons">expand_more</i>*/}
                     {/*</WButton>*/}
-                    <WButton className="table-entry-buttons" onClick={() => props.deleteSubregion(data, props.index)} wType="texted">
+                    <WButton className="table-entry-buttons" onClick={handleDeleteSubregion} wType="texted">
                         <i className="material-icons">close</i>
                     </WButton>
                 </div>
