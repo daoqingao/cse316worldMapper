@@ -10,7 +10,24 @@ const RegionNavigator = (props) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     let linkListPath=[props.activeRegion];
+
+
 
 
     let allRegion = props.regions
@@ -31,10 +48,38 @@ const RegionNavigator = (props) => {
 
     linkListPath.reverse()
     linkListPath.pop()
+    let lastEle = linkListPath[linkListPath.length-1]
 
 
 
 
+
+
+    let leftDisable=true
+    let rightDisable=true
+
+    let parentRegion = allRegion.find(region => region._id===props.activeRegion.parentRegionID)
+    if(parentRegion)
+    {
+        let subArr = parentRegion.subregionsID
+        for(let i=0;i<subArr.length;i++){
+            if (subArr[i]===props.activeRegion._id){
+
+                if(subArr[i-1]!==undefined)
+                {
+                    leftDisable=false
+                }
+                if(subArr[i+1]!==undefined)
+                {
+                    rightDisable=false
+                }
+            }
+        }
+    }
+
+    const clickDisabled = () => {}
+    const leftButton = !leftDisable ? ' navButton' : 'navButtonDisable';
+    const rightButton = !rightDisable ? ' navButton' : 'navButtonDisable ';
 
 
 
@@ -95,6 +140,8 @@ const RegionNavigator = (props) => {
                 {
                     linkListPath.map(entry => (
                         <RegionNavigatorEntry
+
+                            isLast = {entry!==lastEle}
                             entry = {entry}
                             changeRegion={(_id) => props.changeRegion(_id)}
 
@@ -112,11 +159,12 @@ const RegionNavigator = (props) => {
                     props.showRegionViewer && (
                         <WCol size={"3"}>
 
-                            <WButton onClick={handleGoLeft} >
+                            <WButton onClick={handleGoLeft} shape="pill"
+                                                         className={`${leftButton}`} >
                                 <i className="material-icons">arrow_back</i>
                             </WButton>
 
-                            <WButton onClick={handleGoRight}>
+                            <WButton onClick={handleGoRight} className={`${rightButton}`}>
                                 <i className="material-icons">arrow_forward</i>
                             </WButton>
                         </WCol>

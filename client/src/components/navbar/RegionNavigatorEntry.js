@@ -20,7 +20,9 @@ const RegionNavigatorEntry = (props) => {
                      onClick = {() => handleChangeRegion()}>
                 {region.name}
             </WButton>
-            <i className="material-icons" >chevron_right</i>
+            {
+                props.isLast && (<i className="material-icons" >chevron_right</i>)
+            }
         </WNavItem>
     );
 };
