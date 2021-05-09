@@ -135,38 +135,22 @@ export const UPDATE_REGION_FIELD = gql`
 	}
 `;
 
+
 export const ADD_SUBREGION = gql`
 	mutation AddSubregion($_id: String!,$userID: String!) {
 		addSubregion(_id: $_id,userID: $userID)
 	}
 `;
 
+export const DELETE_SUBREGION_ARRAY = gql`
+	mutation DeleteSubregionArray($parentID: String!,$subregionID: String!) {
+		deleteSubregionArray(parentID: $parentID, subregionID: $subregionID)
+	}
+`;
 
+export const ADD_SUBREGION_ARRAY = gql`
+	mutation AddSubregionArray($parentID: String!,$subregionID: String!) {
+		addSubregionArray(parentID: $parentID, subregionID: $subregionID)
+	}
+`;
 
-// export const ADD_REGION = gql`
-// // 	mutation AddTodolist($region: TodoInput!) {
-// // 		addRegion(region: $region) {
-// // 			_id
-// // 			name
-// // 			owner
-// // 			items
-// // 			 {
-// // 				_id
-// // 				description
-// // 				due_date
-// // 				assigned_to
-// // 				completed
-// // 			}
-// // 			capital
-// // 			leader
-// // 			flag
-// // 			landmarks
-// // 			parentRegion
-// // 			subregionNumber
-// // 			regionLandmark
-// // 			subregions
-// //
-// //
-// // 		}
-// // 	}
-// // `;

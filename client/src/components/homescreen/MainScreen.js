@@ -134,6 +134,8 @@ const MainScreen = (props) => {
     const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION);
     const [UpdateRegionsField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
     const [AddSubregion] 	= useMutation(mutations.ADD_SUBREGION, mutationOptions);
+    const [DeleteSubregionArraySingle] 	= useMutation(mutations.DELETE_SUBREGION_ARRAY, mutationOptions);
+    const [AddSubregionArraySingle] 	= useMutation(mutations.ADD_SUBREGION_ARRAY, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -142,6 +144,8 @@ const MainScreen = (props) => {
             setCanUndo(props.tps.hasTransactionToUndo());
             setCanRedo(props.tps.hasTransactionToRedo());
         }
+        await refetch()
+        console.log(props.tps.toString())
     }
 
     const tpsRedo = async () => {
@@ -345,54 +349,14 @@ const MainScreen = (props) => {
     }
     const addSubregion=async () => {
 
-        let parentRegionID = activeRegion._id
-        let parentRegionName = activeRegion.name
-        let subregion = {
-            _id: '',
-            name: 'Untitled',
-            owner: props.user._id,
-
-            sortRule: 'task',
-            sortDirection: 1,
-
-            capital: "none1",
-            leader: "none",
-            flag: "none",
-            landmark: "none",
-            parentRegion: parentRegionName ,
-            subregionNumber: 0,
-            regionLandmark: ["none"],
-
-            parentRegionID: parentRegionID,
-            subregionsID: [],
-            isRoot: false
-
-        }
-
         let parentID=activeRegion._id
-        let field="subregionsID"
-
-        let prevSubregionID=activeRegion.subregionsID
-        let newSubregionID=[...activeRegion.subregionsID]
 
 
+        let transaction = new AddSubregion_Transaction(parentID,props.user._id,AddSubregion,DeleteSubregionArraySingle,AddSubregionArraySingle)
+        props.tps.addTransaction(transaction);
 
-        // const {data} = await AddRegion({variables: {region: subregion}, refetchQueries: [{query: GET_DB_REGIONS}]})
-        // newSubregionID.push(data.addRegion._id)
+        tpsRedo();
 
-
-        const {data2} = await AddSubregion({variables: { _id: parentID, userID: props.user._id}, refetchQueries: [{query: GET_DB_REGIONS}]})
-
-        if (data2) {
-            setActiveRegion(activeRegion);
-        }
-
-
-        //let transaction = new UpdateListField_Transaction(parentID, field, prevSubregionID, newSubregionID, AddSubregion);
-
-        // let transaction = new AddSubregion_Transaction(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,AddSubregion,DeleteRegion)
-        // props.tps.addTransaction(transaction);
-        // tpsRedo();
 
 
     }

@@ -114,11 +114,42 @@ module.exports = {
 			@returns {boolean} true on successful delete, false on failure
 		**/
 		deleteRegion: async (_, args) => {
+
 			const { _id } = args;
+
+
+
+
 			const objectId = new ObjectId(_id);
 			const deleted = await Region.deleteOne({_id: objectId});
 			if(deleted) return true;
 			else return false;
+		},
+		addSubregionArray: async (_, args) => {
+
+			const {parentID,subregionID } = args;
+
+
+			const data = await Region.findOne({_id:parentID});
+			let newSubregionIDArr = [...data.subregionsID]
+			const objectId = new ObjectId(subregionID);
+			newSubregionIDArr.push(objectId)
+			const updatedPar = await Region.updateOne({_id: parentID}, {["subregionsID"]: newSubregionIDArr});
+
+
+			return subregionID
+		},
+		deleteSubregionArray: async (_, args) => {
+
+			const {parentID,subregionID } = args;
+			const data = await Region.findOne({_id:parentID});
+			let SubregionIDArr = [...data.subregionsID]
+			let newSubArr = SubregionIDArr.filter(x => x!=subregionID)
+			const updatedPar = await Region.updateOne({_id: parentID}, {["subregionsID"]: newSubArr});
+
+
+
+			return subregionID
 		},
 		/** 
 		 	@param 	 {object} args - a region objectID, field, and the update value
@@ -169,7 +200,8 @@ module.exports = {
 			newSubregionIDArr.push(addedSub._id)
 			const updatedPar = await Region.updateOne({_id: ParentRegionObjectId}, {["subregionsID"]: newSubregionIDArr});
 
-			 return "";
+			console.log("finish adding")
+			 return SubregionObjectId;
 		},
 		/** 
 			@param	 {object} args - a region objectID, an item objectID, field, and

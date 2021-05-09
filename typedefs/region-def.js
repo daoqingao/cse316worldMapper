@@ -45,6 +45,13 @@ const typeDefs = gql `
 		updateRegionField(_id: String!, field: String!, value: String!): String
 		addSubregion(_id: String!,userID: String!): String
 		
+		deleteSubregionArray(parentID: String!,subregionID: String!): String
+		addSubregionArray(parentID: String!,subregionID: String!): String
+		
+		
+		
+		
+		
 		
 		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]
 		reorderItems(itemId: String!, _id: String!, direction: Int!): [Item]

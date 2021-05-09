@@ -8,41 +8,40 @@ export class jsTPS_Transaction {
 /*  Handles list name changes, or any other top level details of a region that may be added   */
 
 export class AddSubregion_Transaction extends jsTPS_Transaction{
-    constructor(parentID,subregion,field,prevSubregionID,newSubregionID,AddRegion,UpdateRegionsFieldSubregionID,DeleteRegion) {
+    constructor(parentID,userID,Addsubregion,DeleteRegion,AddSubArr) {
         super();
         this.parentID = parentID
-        this.subregion = subregion
-        this.field=field
-        this.prevSubregionIDArr=prevSubregionID
-        this.newSubregionIDArr = newSubregionID
-
-        this.AddRegionFunc = AddRegion
-        this.updateRegionSubregionFunc = UpdateRegionsFieldSubregionID
-        this.deleteRegionFunc = DeleteRegion
+        this.userID = userID
+        this.Addsubregion = Addsubregion
+        this.DeleteRegion = DeleteRegion
+        this.addSubregionArr = AddSubArr
 
 
     }
 
     async doTransaction() {
-        console.log("called to add subregion transaction")
 
-        const {data} = await this.AddRegionFunc({variables: {region: this.subregion}});
-
-        let newSubregionID = [...this.prevSubregionIDArr]
-        newSubregionID.push(data.addRegion._id)
-        this.newSubregionIDArr=newSubregionID
-        this.newSubregionID = data.addRegion._id
-
-        const { data2 } = await this.updateRegionSubregionFunc({ variables: { _id: this.parentID, field: this.field, value: newSubregionID  }});
+        if(this.subregionIDRemoveFromParentArray)
+        {
+            const {data} = await this.addSubregionArr({ variables: { parentID: this.parentID,subregionID: this.subregionID }})
+            return data
+        }
 
 
-        return data;
+        const {data} = await this.Addsubregion({variables: { _id: this.parentID, userID: this.userID}})
+        console.log("this is data")
 
+        this.subregionID = data.addSubregion
+
+        return data
 
 
     }
     async undoTransaction() {
-        const {data} = await this.deleteRegionFunc({ variables: { _id: this.newSubregionID }})
+        const {data} = await this.DeleteRegion({ variables: { parentID: this.parentID,subregionID: this.subregionID }})
+
+        this.subregionIDRemoveFromParentArray=data.deleteSubregionArray
+
         return data
     }
 
