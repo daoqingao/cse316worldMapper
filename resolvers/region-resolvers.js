@@ -170,6 +170,11 @@ module.exports = {
 			const { field, value, _id } = args;
 			const objectId = new ObjectId(_id);
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
+
+			const data = await Region.findOne({_id: objectId});
+			for (const x of data.subregionsID) {
+				await Region.updateOne({_id: x}, {["parentRegion"]: data.name});
+			}
 			if(updated) return value;
 			else return "";
 		},

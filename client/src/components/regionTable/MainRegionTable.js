@@ -16,6 +16,7 @@ const MainRegionTable = (props) => {
                 setActiveList={props.setActiveList}     sort={props.sort}
 
                 addSubregion = {props.addSubregion}
+                showRegionViewer={(_id) =>  props.showRegionViewer(_id)}
             />
             <TableContents
                 key={props.activeRegion._id}

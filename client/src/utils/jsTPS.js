@@ -39,13 +39,9 @@ export class AddSubregion_Transaction extends jsTPS_Transaction{
     }
     async undoTransaction() {
         const {data} = await this.DeleteRegion({ variables: { parentID: this.parentID,subregionID: this.subregionID }})
-
         this.subregionIDRemoveFromParentArray=data.deleteSubregionArray
-
         return data
     }
-
-
 }
 
 

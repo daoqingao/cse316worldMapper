@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WButton, WRow, WCol } from 'wt-frontend';
+import {WButton, WRow, WCol, WNavItem} from 'wt-frontend';
 
 const TableHeader = (props) => {
     const clickDisabled = () => { };
@@ -52,9 +52,15 @@ const TableHeader = (props) => {
 
                 </WCol>
                 <WCol size={"6"}>
-                    <div className="tableName">
-                        Region: {props.activeRegion.name}
-                    </div>
+
+                    <WButton className="tableName" shape="pill"
+                             hoverAnimation="darken"
+                             clickAnimation="ripple-light"
+                             onClick = {() => props.showRegionViewer(props.activeRegion._id)}
+                             >
+                        Enter Region Viewer: {props.activeRegion.name}
+                    </WButton>
+
                 </WCol>
 
             </WRow>
