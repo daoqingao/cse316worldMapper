@@ -17,7 +17,7 @@ import { UpdateListField_Transaction,
     SortItems_Transaction,
     UpdateListItems_Transaction,
 
-
+    DeleteSubregion_Transaction,
     AddSubregion_Transaction,
     ReorderItems_Transaction,
     EditSubregion_Transaction } 				from '../../utils/jsTPS';
@@ -357,16 +357,21 @@ const MainScreen = (props) => {
         props.tps.addTransaction(transaction);
 
         tpsRedo();
-
-
-
     }
 
-    const deleteSubregion=async (subregion,index) => {
+    const deleteSubregion=async (subregion) => {
 
-        console.log("delete cild")
-        let _id = subregion._id
-        DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+        let parentID=activeRegion._id
+        let subregionID = subregion._id
+
+        let transaction = new DeleteSubregion_Transaction(parentID,subregionID,DeleteSubregionArraySingle,SetSubregionArray,activeRegion.subregionsID)
+
+        props.tps.addTransaction(transaction);
+        tpsRedo();
+
+
+        // let _id = subregion._id
+        // DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 
     }
 
