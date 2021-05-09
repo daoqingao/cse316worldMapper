@@ -121,7 +121,11 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 {
-                    <div className="table-text" onClick = {() => props.showRegionViewer(data._id)}>
+                    <div className="table-text" onClick = {() => {
+                        props.changeRegion(data._id)
+                        props.showRegionViewer(data._id)
+
+                    }}>
                         {landmarks}
                     </div>
 

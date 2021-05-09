@@ -286,7 +286,11 @@ module.exports = {
 			let subregionArr = [];
 			let subregionIDArr = found.subregionsID
 			for (const x of subregionIDArr) {
-				subregionArr.push(await Region.findOne({_id: x}))
+				let temp=await Region.findOne({_id: x})
+				if (temp!==null){
+					subregionArr.push(temp)
+				}
+
 			}
 
 
