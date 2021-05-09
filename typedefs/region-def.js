@@ -47,7 +47,8 @@ const typeDefs = gql `
 		
 		deleteSubregionArray(parentID: String!,subregionID: String!): String
 		addSubregionArray(parentID: String!,subregionID: String!): String
-		
+		setSubregionArray(parentID: String!,subregionID: [String]): String
+		sortItems(_id: String!, criteria: String!): [Item]
 		
 		
 		
@@ -55,7 +56,7 @@ const typeDefs = gql `
 		
 		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]
 		reorderItems(itemId: String!, _id: String!, direction: Int!): [Item]
-		sortItems(_id: String!, criteria: String!): [Item]
+
 	}
 	input FieldInput {
 		_id: String

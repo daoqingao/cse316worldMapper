@@ -154,3 +154,9 @@ export const ADD_SUBREGION_ARRAY = gql`
 	}
 `;
 
+export const SET_SUBREGION_ARRAY = gql`
+	mutation SetSubregionArray($parentID: String!,$subregionID: [String]) {
+		setSubregionArray(parentID: $parentID, subregionID: $subregionID)
+	}
+`;
+

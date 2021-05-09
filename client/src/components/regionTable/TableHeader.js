@@ -65,18 +65,18 @@ const TableHeader = (props) => {
 
 
                 <WCol size="2">
-                    <WButton onClick={props.disabled ? () => {} : () => props.sort('task') } className='table-header-section' wType="texted" >Region Name</WButton>
+                    <WButton onClick={props.disabled ? () => {} : () => props.sort('name') } className='table-header-section' wType="texted" >Region Name</WButton>
                 </WCol>
 
                 <WCol size="2">
-                    <WButton onClick={props.disabled ? () => {} : () => props.sort('due_date') } className='table-header-section' wType="texted">Capital</WButton>
+                    <WButton onClick={props.disabled ? () => {} : () => props.sort('capital') } className='table-header-section' wType="texted">Capital</WButton>
                 </WCol>
 
                 <WCol size="2">
-                    <WButton onClick={props.disabled ? () => {} : () => props.sort('status') } className='table-header-section' wType="texted" >Leader</WButton>
+                    <WButton onClick={props.disabled ? () => {} : () => props.sort('leader') } className='table-header-section' wType="texted" >Leader</WButton>
                 </WCol>
                 <WCol size="2">
-                    <WButton onClick={props.disabled ? () => {} : () => props.sort('assigned_to') } className='table-header-section' wType="texted" >Flag</WButton>
+                    <WButton className='table-header-section' wType="texted" >Flag</WButton>
                 </WCol>
 
                 <WCol size="3">

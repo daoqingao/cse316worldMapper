@@ -151,6 +151,15 @@ module.exports = {
 
 			return subregionID
 		},
+
+		setSubregionArray: async (_, args) => {
+			const {parentID,subregionID} = args;
+			const data = await Region.findOne({_id:parentID});
+			const updatedPar = await Region.updateOne({_id: parentID}, {["subregionsID"]: subregionID});
+			return parentID
+		},
+
+
 		/** 
 		 	@param 	 {object} args - a region objectID, field, and the update value
 			@returns {boolean} true on successful update, false on failure
@@ -262,31 +271,128 @@ module.exports = {
 		},
 
 		sortItems: async (_, args) => {
+			console.log("sorting")
 			const { _id, criteria } = args;
 			const listId = new ObjectId(_id);
 			const found = await Region.findOne({_id: listId});
-			let newDirection = found.sortDirection === 1 ? -1 : 1; 
-			console.log(newDirection, found.sortDirection);
-			let sortedItems;
 
-			switch(criteria) {
-				case 'task':
-					sortedItems = Sorting.byTask(found.items, newDirection);
-					break;
-				case 'due_date':
-					sortedItems = Sorting.byDueDate(found.items, newDirection);
-					break;
-				case 'status':
-					sortedItems = Sorting.byStatus(found.items, newDirection);
-					break;
-				case 'assigned_to':
-					sortedItems = Sorting.byAssignedTo(found.items, newDirection);
-					break;
-				default:
-					return found.items;
+
+
+			let subregionArr = [];
+			let subregionIDArr = found.subregionsID
+			for (const x of subregionIDArr) {
+				subregionArr.push(await Region.findOne({_id: x}))
 			}
-			const updated = await Region.updateOne({_id: listId}, { items: sortedItems, sortRule: criteria, sortDirection: newDirection })
-			if(updated) return (sortedItems);
+
+
+			console.log("this is sub arr")
+			console.log(subregionArr)
+
+
+			let sorted=true
+			if (criteria==="name")
+			{
+				for (let a = 0; a < subregionArr.length - 1; a++) {
+					if (subregionArr[a].name.localeCompare(subregionArr[a + 1].name) > 0) {
+						sorted = false
+						break
+					}
+				}
+					for( let i=0;i<subregionArr.length-1;i++)
+					{
+						for ( let j=0;j<subregionArr.length-1;j++){
+							if(!sorted){
+								if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)>0){
+									let temp = subregionArr[j]
+									subregionArr[j]=subregionArr[j+1]
+									subregionArr[j+1]=temp
+								}
+							}
+							else{
+								if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)<0){
+									let temp = subregionArr[j]
+									subregionArr[j]=subregionArr[j+1]
+									subregionArr[j+1]=temp
+								}
+							}
+						}
+					}
+			}
+			else if (criteria==="capital")
+			{
+				for (let a = 0; a < subregionArr.length - 1; a++) {
+					if (subregionArr[a].capital.localeCompare(subregionArr[a + 1].capital) > 0) {
+						sorted = false
+						break
+					}
+				}
+				for( let i=0;i<subregionArr.length-1;i++)
+				{
+					for ( let j=0;j<subregionArr.length-1;j++){
+						if(!sorted){
+							if(subregionArr[j].capital.localeCompare(subregionArr[j+1].capital)>0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
+							}
+						}
+						else{
+							if(subregionArr[j].capital.localeCompare(subregionArr[j+1].capital)<0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
+							}
+						}
+					}
+				}
+			}
+			else if (criteria==="leader")
+			{
+				for (let a = 0; a < subregionArr.length - 1; a++) {
+					if (subregionArr[a].leader.localeCompare(subregionArr[a + 1].leader) > 0) {
+						sorted = false
+						break
+					}
+				}
+				for( let i=0;i<subregionArr.length-1;i++)
+				{
+					for ( let j=0;j<subregionArr.length-1;j++){
+						if(!sorted){
+							if(subregionArr[j].leader.localeCompare(subregionArr[j+1].leader)>0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
+							}
+						}
+						else{
+							if(subregionArr[j].leader.localeCompare(subregionArr[j+1].leader)<0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
+							}
+						}
+					}
+				}
+			}
+
+
+
+
+
+
+
+			let newSortedSubregionIDArr=[]
+			subregionArr.forEach(x=>{
+				newSortedSubregionIDArr.push(x._id)
+			})
+
+			console.log(newSortedSubregionIDArr)
+
+
+
+			const updatedPar = await Region.updateOne({_id: listId}, {["subregionsID"]: newSortedSubregionIDArr});
+
+			return undefined
 
 		}
 

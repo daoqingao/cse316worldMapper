@@ -136,6 +136,7 @@ const MainScreen = (props) => {
     const [AddSubregion] 	= useMutation(mutations.ADD_SUBREGION, mutationOptions);
     const [DeleteSubregionArraySingle] 	= useMutation(mutations.DELETE_SUBREGION_ARRAY, mutationOptions);
     const [AddSubregionArraySingle] 	= useMutation(mutations.ADD_SUBREGION_ARRAY, mutationOptions);
+    const [SetSubregionArray] 	= useMutation(mutations.SET_SUBREGION_ARRAY, mutationOptions);
 
 
     const tpsUndo = async () => {
@@ -244,7 +245,7 @@ const MainScreen = (props) => {
     const sort = (criteria) => {
         let prevSortRule = sortRule;
         setSortRule(criteria);
-        let transaction = new SortItems_Transaction(activeRegion._id, criteria, prevSortRule, sortTodoItems);
+        let transaction = new SortItems_Transaction(activeRegion._id, criteria, prevSortRule, sortTodoItems,activeRegion.subregionsID,SetSubregionArray);
         console.log(transaction)
         props.tps.addTransaction(transaction);
         tpsRedo();
