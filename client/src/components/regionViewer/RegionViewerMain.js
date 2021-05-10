@@ -72,6 +72,29 @@ const RegionViewerMain = (props) => {
     };
 
 
+
+
+    let rootRegion=props.activeRegion
+    let allSubregionLandmarks=[]
+    const treeTraversal = (rootRegion) => {
+        if(rootRegion.subregionsID.length===0)
+            return []
+        rootRegion.subregionsID.forEach(x=>{
+            //TODO: get this
+            allRegions.forEach(y=>{
+                if (y._id===x){
+                    y.regionLandmark.forEach(z=>allSubregionLandmarks.push(z))
+                    treeTraversal(y)
+                }
+                })
+        })
+    }
+
+    treeTraversal(rootRegion)
+    console.log("treetrav")
+    console.log(allSubregionLandmarks)
+    //tree traversal
+
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
@@ -171,27 +194,35 @@ const RegionViewerMain = (props) => {
                         <WLayout wLayout={"footer"}>
 
                             <WLMain>
-
+    {
+        currentRegionViewer.regionLandmark.length!==0 &&
+            currentRegionViewer.regionLandmark.map(entry => (
+                <RegionViewerLandmarkTable
+                    child={false}
+                    entry ={entry}
+                    landmarks={currentRegionViewer.regionLandmark}
+                    addRegionLandmark={props.addRegionLandmark}
+                    regionViewerID={regionViewerID}
+                    indexCounter={indexCounter++}
+                />
+            ))
+    }
 
                                 {
-                                    currentRegionViewer.regionLandmark.length!==0 &&
-                                    currentRegionViewer.regionLandmark.map(entry => (
+
+                                    allSubregionLandmarks.length!==0 &&
+                                    allSubregionLandmarks.map(entry => (
                                         <RegionViewerLandmarkTable
+                                            child={true}
                                             entry ={entry}
                                             landmarks={currentRegionViewer.regionLandmark}
                                             addRegionLandmark={props.addRegionLandmark}
                                             regionViewerID={regionViewerID}
                                             indexCounter={indexCounter++}
-
                                         />
-
-
-
-                                            ))
-
-
-
+                                    ))
                                 }
+
                             </WLMain>
 
                             <WLFooter>

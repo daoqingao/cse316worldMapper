@@ -50,28 +50,32 @@ const RegionViewerLandmarkTable = (props) => {
 
 
             <WCol size={"1"}>
-                <WButton
-                    className='mapDeleteButton'
-                    shape="pill"
-                                        hoverAnimation="darken"
-                                        clickAnimation="ripple-light"
-                                        onClick={handleDeleteLandmark}
-                >
-                    <i className="material-icons">delete</i>
-                </WButton>
+                {
+                    !props.child && (                <WButton
+                        className='mapDeleteButton'
+                        shape="pill"
+                        hoverAnimation="darken"
+                        clickAnimation="ripple-light"
+                        onClick={handleDeleteLandmark}
+                    >
+                        <i className="material-icons">delete</i>
+                    </WButton>)
+                }
             </WCol>
 
 
             <WCol size={"1"}>
-                <WButton
-                    className='mapDeleteButton'
-                    shape="pill"
-                                        hoverAnimation="darken"
-                                        clickAnimation="ripple-light"
-                                        onClick={handleEditing}
-                >
-                    <i className="material-icons">edit</i>
-                </WButton>
+                {
+                    !props.child && (                <WButton
+                        className='mapDeleteButton'
+                        shape="pill"
+                        hoverAnimation="darken"
+                        clickAnimation="ripple-light"
+                        onClick={handleEditing}
+                    >
+                        <i className="material-icons">edit</i>
+                    </WButton>)
+                }
             </WCol>
 
         </WRow>

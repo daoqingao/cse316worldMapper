@@ -575,6 +575,7 @@ const MainScreen = (props) => {
                 <RegionViewerMain
                     regionViewerID = {regionViewerID}
                     allRegions = {regions}
+                    activeRegion = {activeRegion}
 
                     addRegionLandmark = {addRegionLandmark}
                     changeParentRegion={changeParentRegion}
