@@ -201,7 +201,7 @@ module.exports = {
 				landmark: "none",
 				parentRegion: data.name ,
 				subregionNumber: 0,
-				regionLandmark: ["a","b","c"],
+				regionLandmark: [],
 
 				parentRegionID: ParentRegionObjectId,
 				subregionsID: [],

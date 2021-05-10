@@ -319,7 +319,7 @@ const MainScreen = (props) => {
             landmark: "none",
             parentRegion: "none",
             subregionNumber: 0,
-            regionLandmark: ["none"],
+            regionLandmark: [],
 
             parentRegionID: '',
             subregionsID: [],
