@@ -52,6 +52,26 @@ const RegionViewerMain = (props) => {
         shape: "rounded"
     }
 
+
+
+    const [editing, toggleEditing] = useState(false);
+
+    const handleEditing = (e) => {
+        e.stopPropagation();
+        toggleEditing(!editing);
+    };
+
+    const handleSubmit = (e) => {
+        handleEditing(e);
+        const { name, value } = e.target;
+
+        console.log(name)
+        console.log(value)
+        //props.addRegionLandmark(value,props.regionViewerID,2,props.indexCounter)
+        props.changeParentRegion()
+    };
+
+
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
@@ -94,10 +114,22 @@ const RegionViewerMain = (props) => {
                                 Parent Region:
                             </WCol>
                             <WCol size={"1"}>
-                                {currentRegionViewer.parentRegion}
+
+                                {
+                                    editing ?   <WInput className="edit-parent-region" inputClass="list-item-edit-input"
+                                                        onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
+                                                        name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={currentRegionViewer.parentRegion}
+                                        />
+                                        :
+                                        <div className='list-text'>
+                                            {currentRegionViewer.parentRegion}
+
+                                        </div>
+                                }
+
                             </WCol>
                             <WCol size={"1"}>
-                                <i className="material-icons" >edit</i>
+                                <i className="material-icons" onClick={handleEditing}>edit</i>
                             </WCol>
 
                         </WRow>

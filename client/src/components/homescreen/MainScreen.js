@@ -433,6 +433,10 @@ const MainScreen = (props) => {
 
     }
 
+    const changeParentRegion = async (value) => {
+
+    }
+
 
     return (
         <WLayout wLayout="header">
@@ -573,6 +577,7 @@ const MainScreen = (props) => {
                     allRegions = {regions}
 
                     addRegionLandmark = {addRegionLandmark}
+                    changeParentRegion={changeParentRegion}
 
                     undo={tpsUndo} redo={tpsRedo}
                     canUndo={canUndo}

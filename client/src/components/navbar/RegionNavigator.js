@@ -59,7 +59,7 @@ const RegionNavigator = (props) => {
     let rightDisable=true
 
     let parentRegion = allRegion.find(region => region._id===props.activeRegion.parentRegionID)
-    if(parentRegion)
+    if(parentRegion!==undefined)
     {
         let subArr = parentRegion.subregionsID
         for(let i=0;i<subArr.length;i++){

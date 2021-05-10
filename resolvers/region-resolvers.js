@@ -8,23 +8,23 @@ const Sorting = require('../utils/sorting')
 
 module.exports = {
 	Query: {
-		/** 
-		 	@param 	 {object} req - the request object containing a user id
-			@returns {array} an array of region objects on success, and an empty array on failure
-		**/
+		/**
+		 @param 	 {object} req - the request object containing a user id
+		 @returns {array} an array of region objects on success, and an empty array on failure
+		 **/
 		getAllRegions: async (_, __, { req }) => {
 			const _id = new ObjectId(req.userId);
 			if(!_id) { return([])};
 			const regions = await Region.find({owner: _id}).sort({updatedAt: 'descending'});
 			if(regions) {
 				return (regions);
-			} 
+			}
 
 		},
-		/** 
-		 	@param 	 {object} args - a region id
-			@returns {object} a region on success and an empty object on failure
-		**/
+		/**
+		 @param 	 {object} args - a region id
+		 @returns {object} a region on success and an empty object on failure
+		 **/
 		getRegionById: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
@@ -34,10 +34,10 @@ module.exports = {
 		},
 	},
 	Mutation: {
-		/** 
-		 	@param 	 {object} args - a region id and an empty item object
-			@returns {string} the objectID of the item or an error message
-		**/
+		/**
+		 @param 	 {object} args - a region id and an empty item object
+		 @returns {string} the objectID of the item or an error message
+		 **/
 		addItem: async(_, args) => {
 			const { _id, item , index } = args;
 			const listId = new ObjectId(_id);
@@ -48,17 +48,17 @@ module.exports = {
 			let listItems = found.items;
 			if(index < 0) listItems.push(item);
 			else listItems.splice(index, 0, item);
-			
-			
+
+
 			const updated = await Region.updateOne({_id: listId}, { items: listItems });
 
 			if(updated) return (item._id)
 			else return ('Could not add item');
 		},
-		/** 
-		 	@param 	 {object} args - an empty region object
-			@returns {string} the objectID of the region or an error message
-		**/
+		/**
+		 @param 	 {object} args - an empty region object
+		 @returns {string} the objectID of the region or an error message
+		 **/
 		addRegion: async (_, args) => {
 			// THIS IS ONLY USE TO ADD ROOT MAPS REGION
 
@@ -93,11 +93,11 @@ module.exports = {
 				return newList;
 			}
 		},
-		/** 
-		 	@param 	 {object} args - a region objectID and item objectID
-			@returns {array} the updated item array on success or the initial 
-							 array on failure
-		**/
+		/**
+		 @param 	 {object} args - a region objectID and item objectID
+		 @returns {array} the updated item array on success or the initial
+		 array on failure
+		 **/
 		deleteItem: async (_, args) => {
 			const  { _id, itemId } = args;
 			const listId = new ObjectId(_id);
@@ -109,10 +109,10 @@ module.exports = {
 			else return (found.items);
 
 		},
-		/** 
-		 	@param 	 {object} args - a region objectID
-			@returns {boolean} true on successful delete, false on failure
-		**/
+		/**
+		 @param 	 {object} args - a region objectID
+		 @returns {boolean} true on successful delete, false on failure
+		 **/
 		deleteRegion: async (_, args) => {
 
 			const { _id } = args;
@@ -160,10 +160,10 @@ module.exports = {
 		},
 
 
-		/** 
-		 	@param 	 {object} args - a region objectID, field, and the update value
-			@returns {boolean} true on successful update, false on failure
-		**/
+		/**
+		 @param 	 {object} args - a region objectID, field, and the update value
+		 @returns {boolean} true on successful update, false on failure
+		 **/
 		updateRegionField: async (_, args) => {
 
 			console.log("update region sub id")
@@ -215,14 +215,14 @@ module.exports = {
 			const updatedPar = await Region.updateOne({_id: ParentRegionObjectId}, {["subregionsID"]: newSubregionIDArr});
 
 			console.log("finish adding")
-			 return SubregionObjectId;
+			return SubregionObjectId;
 		},
-		/** 
-			@param	 {object} args - a region objectID, an item objectID, field, and
-									 update value. Flag is used to interpret the completed 
-									 field,as it uses a boolean instead of a string
-			@returns {array} the updated item array on success, or the initial item array on failure
-		**/
+		/**
+		 @param	 {object} args - a region objectID, an item objectID, field, and
+		 update value. Flag is used to interpret the completed
+		 field,as it uses a boolean instead of a string
+		 @returns {array} the updated item array on success, or the initial item array on failure
+		 **/
 		updateItemField: async (_, args) => {
 			const { _id, itemId, field,  flag } = args;
 			let { value } = args
@@ -234,8 +234,8 @@ module.exports = {
 				if(value === 'incomplete') { value = false; }
 			}
 			listItems.map(item => {
-				if(item._id.toString() === itemId) {	
-					
+				if(item._id.toString() === itemId) {
+
 					item[field] = value;
 				}
 			});
@@ -244,9 +244,9 @@ module.exports = {
 			else return (found.items);
 		},
 		/**
-			@param 	 {object} args - contains list id, item to swap, and swap direction
-			@returns {array} the reordered item array on success, or initial ordering on failure
-		**/
+		 @param 	 {object} args - contains list id, item to swap, and swap direction
+		 @returns {array} the reordered item array on success, or initial ordering on failure
+		 **/
 		reorderItems: async (_, args) => {
 			const { _id, itemId, direction } = args;
 			const listId = new ObjectId(_id);
@@ -277,46 +277,46 @@ module.exports = {
 
 		addLandmark: async (_, args) => {
 			const { regionID,landmarkName,index,op} = args;
-if(op===1){
+			if(op===1){
 
 
-	const data = await Region.findOne({_id: regionID});
+				const data = await Region.findOne({_id: regionID});
 
 
-	let newLandmarkArr = [...data.regionLandmark]
-	if(index===-1)
-		newLandmarkArr.push(landmarkName)
-	else
-		newLandmarkArr.splice(index,0,landmarkName)
+				let newLandmarkArr = [...data.regionLandmark]
+				if(index===-1)
+					newLandmarkArr.push(landmarkName)
+				else
+					newLandmarkArr.splice(index,0,landmarkName)
 
-	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
-	return""
-}
-else if(op===-1)
-{
-	if(index===-1){
-		const data = await Region.findOne({_id: regionID});
-		let newLandmarkArr = [...data.regionLandmark]
-		newLandmarkArr.splice(newLandmarkArr.length-1,1)
-		const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
-		return""
-	}
+				const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+				return""
+			}
+			else if(op===-1)
+			{
+				if(index===-1){
+					const data = await Region.findOne({_id: regionID});
+					let newLandmarkArr = [...data.regionLandmark]
+					newLandmarkArr.splice(newLandmarkArr.length-1,1)
+					const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+					return""
+				}
 
-	const data = await Region.findOne({_id: regionID});
-	let newLandmarkArr = [...data.regionLandmark]
-	let oldLandmark=newLandmarkArr[index]
-	newLandmarkArr.splice(index,1)
-	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
-	return oldLandmark
-}
-else if(op===2){
-	const data = await Region.findOne({_id: regionID});
-	let newLandmarkArr = [...data.regionLandmark]
-	let oldLandmark=newLandmarkArr[index]
-	newLandmarkArr.splice(index,1,landmarkName)
-	const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
-	return oldLandmark
-}
+				const data = await Region.findOne({_id: regionID});
+				let newLandmarkArr = [...data.regionLandmark]
+				let oldLandmark=newLandmarkArr[index]
+				newLandmarkArr.splice(index,1)
+				const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+				return oldLandmark
+			}
+			else if(op===2){
+				const data = await Region.findOne({_id: regionID});
+				let newLandmarkArr = [...data.regionLandmark]
+				let oldLandmark=newLandmarkArr[index]
+				newLandmarkArr.splice(index,1,landmarkName)
+				const updatedPar = await Region.updateOne({_id: regionID}, {["regionLandmark"]: newLandmarkArr});
+				return oldLandmark
+			}
 
 		},
 
@@ -359,25 +359,25 @@ else if(op===2){
 						break
 					}
 				}
-					for( let i=0;i<subregionArr.length-1;i++)
-					{
-						for ( let j=0;j<subregionArr.length-1;j++){
-							if(!sorted){
-								if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)>0){
-									let temp = subregionArr[j]
-									subregionArr[j]=subregionArr[j+1]
-									subregionArr[j+1]=temp
-								}
+				for( let i=0;i<subregionArr.length-1;i++)
+				{
+					for ( let j=0;j<subregionArr.length-1;j++){
+						if(!sorted){
+							if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)>0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
 							}
-							else{
-								if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)<0){
-									let temp = subregionArr[j]
-									subregionArr[j]=subregionArr[j+1]
-									subregionArr[j+1]=temp
-								}
+						}
+						else{
+							if(subregionArr[j].name.localeCompare(subregionArr[j+1].name)<0){
+								let temp = subregionArr[j]
+								subregionArr[j]=subregionArr[j+1]
+								subregionArr[j+1]=temp
 							}
 						}
 					}
+				}
 			}
 			else if (criteria==="capital")
 			{
