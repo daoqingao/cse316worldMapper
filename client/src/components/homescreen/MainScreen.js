@@ -450,20 +450,11 @@ const MainScreen = (props) => {
 
 
 
-        // let transaction = new ChangeParentSubregion_Transaction(linkID,unlinkID,currentID)
-        // props.tps.addTransaction(transaction);
-        // tpsRedo();
+        let transaction = new ChangeParentSubregion_Transaction(linkID,unlinkID,currentID,changeSubregionArray)
+        props.tps.addTransaction(transaction);
+        tpsRedo();
 
 
-
-
-
-
-
-        console.log("allow to update")
-        console.log(linkID)
-
-        const {data} = await changeSubregionArray({variables: {linkID: linkID, unlinkID:unlinkID , subregionID: currentID}})
 
 
     }

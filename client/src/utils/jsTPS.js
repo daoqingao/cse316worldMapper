@@ -9,27 +9,22 @@ export class jsTPS_Transaction {
 
 
 export class ChangeParentSubregion_Transaction extends jsTPS_Transaction{
-    constructor(parentID,subregionID,DeleteSubArr,SetSubArr,previous) {
+    constructor(linkID,unlinkID,currentID,changeSubregionArray) {
         super();
-        this.parentID = parentID
-        this.subregionID = subregionID
-
-        this.delSubregionArr = DeleteSubArr
-        this.setSubregionArr = SetSubArr
-        this.previousSubregionArr = previous
-
+        this.linkID=linkID
+        this.unlinkID=unlinkID
+        this.currentID=currentID
+        this.changeSubregionArray=changeSubregionArray
 
     }
 
     async doTransaction() {
 
-        const {data} = await this.delSubregionArr({ variables: { parentID: this.parentID,subregionID: this.subregionID }})
+        const {data} = await this.changeSubregionArray({variables: {linkID: this.linkID, unlinkID:this.unlinkID , subregionID: this.currentID}})
         return data
-
-
     }
     async undoTransaction() {
-        const {data} = await this.setSubregionArr({ variables: { parentID: this.parentID,subregionID: this.previousSubregionArr }})
+        const {data} = await this.changeSubregionArray({variables: {linkID: this.unlinkID, unlinkID:this.linkID , subregionID: this.currentID}})
         return data
     }
 }
