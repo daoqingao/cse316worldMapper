@@ -10,6 +10,11 @@ const TableEntry = (props) => {
     const leader= data.leader;
     const flag = data.flag;
     const landmarks = data.landmark
+    const regionLandmark=data.regionLandmark;
+    let hasLandmark = false
+    if(regionLandmark[0]!==undefined)
+        hasLandmark=true
+
 
 
     const [editingRegionName, toggleRegionNameEdit] = useState(false);
@@ -126,7 +131,7 @@ const TableEntry = (props) => {
                         props.showRegionViewer(data._id)
 
                     }}>
-                        {landmarks}
+                        {hasLandmark?regionLandmark[0]+",...":"none"}
                     </div>
 
                 }

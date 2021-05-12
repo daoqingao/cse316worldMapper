@@ -7,6 +7,34 @@ export class jsTPS_Transaction {
 }
 /*  Handles list name changes, or any other top level details of a region that may be added   */
 
+
+export class ChangeParentSubregion_Transaction extends jsTPS_Transaction{
+    constructor(parentID,subregionID,DeleteSubArr,SetSubArr,previous) {
+        super();
+        this.parentID = parentID
+        this.subregionID = subregionID
+
+        this.delSubregionArr = DeleteSubArr
+        this.setSubregionArr = SetSubArr
+        this.previousSubregionArr = previous
+
+
+    }
+
+    async doTransaction() {
+
+        const {data} = await this.delSubregionArr({ variables: { parentID: this.parentID,subregionID: this.subregionID }})
+        return data
+
+
+    }
+    async undoTransaction() {
+        const {data} = await this.setSubregionArr({ variables: { parentID: this.parentID,subregionID: this.previousSubregionArr }})
+        return data
+    }
+}
+
+
 export class ModifyLandmark_Transaction extends jsTPS_Transaction{
     constructor(regionID,landmarkName,index,op,AddLandmark) {
         super();

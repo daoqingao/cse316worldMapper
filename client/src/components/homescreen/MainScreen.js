@@ -19,6 +19,7 @@ import { UpdateListField_Transaction,
     ModifyLandmark_Transaction,
     DeleteSubregion_Transaction,
     AddSubregion_Transaction,
+    ChangeParentSubregion_Transaction,
     ReorderItems_Transaction,
     EditSubregion_Transaction } 				from '../../utils/jsTPS';
 
@@ -138,6 +139,7 @@ const MainScreen = (props) => {
     const [DeleteSubregionArraySingle] 	= useMutation(mutations.DELETE_SUBREGION_ARRAY, mutationOptions);
     const [AddSubregionArraySingle] 	= useMutation(mutations.ADD_SUBREGION_ARRAY, mutationOptions);
     const [SetSubregionArray] 	= useMutation(mutations.SET_SUBREGION_ARRAY, mutationOptions);
+    const [changeSubregionArray] 	= useMutation(mutations.CHANGE_SUBREGION_ARRAY, mutationOptions);
     const [AddLandmark] 	= useMutation(mutations.ADD_LANDMARK, mutationOptions);
 
 
@@ -433,7 +435,36 @@ const MainScreen = (props) => {
 
     }
 
-    const changeParentRegion = async (value) => {
+    const changeParentRegion = async (value,currentRegion) => {
+
+        let unlinkID=currentRegion.parentRegionID
+        let linkID=undefined
+        let currentID = currentRegion._id
+
+        regions.forEach( region => {
+            if(region.name===value)
+                linkID=region._id
+        })
+        if(linkID===undefined)
+            return
+
+
+
+        // let transaction = new ChangeParentSubregion_Transaction(linkID,unlinkID,currentID)
+        // props.tps.addTransaction(transaction);
+        // tpsRedo();
+
+
+
+
+
+
+
+        console.log("allow to update")
+        console.log(linkID)
+
+        const {data} = await changeSubregionArray({variables: {linkID: linkID, unlinkID:unlinkID , subregionID: currentID}})
+
 
     }
 
@@ -462,12 +493,13 @@ const MainScreen = (props) => {
                                 showRegionTable = {showRegionTable}
                                 showRegionViewer = {showRegionViewer}
 
-                                changeRegion={(_id) => changeRegion(_id)}
 
                                 setShowRegionViewer = {toggleShowRegionViewer}
                                 setShowRegionTable={toggleShowRegionTable}
 
                                 showThisRegionViewer = {showToRegionViewer}
+                                changeRegion={(_id) => changeRegion(_id)}
+
 
                             />
 
@@ -562,6 +594,7 @@ const MainScreen = (props) => {
                             setShowDeleteSubregion = {toggleShowDeleteSubregion}
                             showDeleteSubregion={showDeleteSubregion}
 
+
                         />
                     </div>
                 }
@@ -583,6 +616,13 @@ const MainScreen = (props) => {
                     undo={tpsUndo} redo={tpsRedo}
                     canUndo={canUndo}
                     canRedo={canRedo}
+
+
+                    setShowRegionViewer = {toggleShowRegionViewer}
+                    setShowRegionTable={toggleShowRegionTable}
+
+                    changeRegion={(_id) => changeRegion(_id)}
+
 
                 />
             </WLMain>          }

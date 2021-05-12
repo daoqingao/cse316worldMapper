@@ -48,6 +48,8 @@ const typeDefs = gql `
 		deleteSubregionArray(parentID: String!,subregionID: String!): String
 		addSubregionArray(parentID: String!,subregionID: String!): String
 		setSubregionArray(parentID: String!,subregionID: [String]): String
+        changeSubregionArray(linkID: String!,unlinkID: String!, subregionID: String!): String
+		
 		sortItems(_id: String!, criteria: String!): [Item]
 		
 				addLandmark(regionID: String!,landmarkName: String!  , index: Int!, op:Int!): String

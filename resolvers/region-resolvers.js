@@ -159,6 +159,36 @@ module.exports = {
 			return parentID
 		},
 
+		changeSubregionArray: async (_, args) => {
+
+			const {linkID,unlinkID,subregionID } = args;
+
+			console.log("call to change")
+
+			console.log(linkID)
+			console.log(unlinkID)
+
+			const data = await Region.findOne({_id:unlinkID});
+			let SubregionIDArr = [...data.subregionsID]
+			let newSubArr = SubregionIDArr.filter(x => x!=subregionID)
+			const updatedPar = await Region.updateOne({_id: unlinkID}, {["subregionsID"]: newSubArr});
+
+			const data2 = await Region.findOne({_id:linkID});
+			let newSubregionIDArr = [...data2.subregionsID]
+			const objectId = new ObjectId(subregionID);
+			newSubregionIDArr.push(objectId)
+			const updatedPar2 = await Region.updateOne({_id: linkID}, {["subregionsID"]: newSubregionIDArr});
+
+			const region = await Region.findOne({_id:subregionID});
+			console.log(region)
+
+			const upParName= await Region.updateOne({_id: subregionID}, {["parentRegion"]: data2.name});
+			const upParId = await Region.updateOne({_id: subregionID}, {["parentRegionID"]: linkID});
+
+
+
+			return subregionID
+		},
 
 		/**
 		 @param 	 {object} args - a region objectID, field, and the update value

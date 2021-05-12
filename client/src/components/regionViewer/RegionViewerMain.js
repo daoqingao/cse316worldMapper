@@ -65,10 +65,9 @@ const RegionViewerMain = (props) => {
         handleEditing(e);
         const { name, value } = e.target;
 
-        console.log(name)
-        console.log(value)
+
         //props.addRegionLandmark(value,props.regionViewerID,2,props.indexCounter)
-        props.changeParentRegion()
+        props.changeParentRegion(value,currentRegionViewer)
     };
 
 
@@ -76,24 +75,34 @@ const RegionViewerMain = (props) => {
 
     let rootRegion=props.activeRegion
     let allSubregionLandmarks=[]
+
     const treeTraversal = (rootRegion) => {
         if(rootRegion.subregionsID.length===0)
-            return []
-        rootRegion.subregionsID.forEach(x=>{
-            //TODO: get this
-            allRegions.forEach(y=>{
-                if (y._id===x){
-                    y.regionLandmark.forEach(z=>allSubregionLandmarks.push(z))
-                    treeTraversal(y)
+            return
+        rootRegion.subregionsID.forEach(id=>{
+            allRegions.forEach(region=>{
+                if (region._id===id){
+                    region.regionLandmark.forEach(landmark=>
+                        allSubregionLandmarks.push(landmark+"-"+region.name))
+                    treeTraversal(region)
                 }
                 })
         })
     }
-
     treeTraversal(rootRegion)
-    console.log("treetrav")
-    console.log(allSubregionLandmarks)
-    //tree traversal
+
+
+
+    const handleReturnToParent = () => {
+
+        if(currentRegionViewer.isRoot===true)
+            return
+        props.setShowRegionTable(true)
+        props.setShowRegionViewer(false)
+        props.changeRegion(currentRegionViewer.parentRegionID)
+
+
+    }
 
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
@@ -136,7 +145,7 @@ const RegionViewerMain = (props) => {
                             <WCol size={"3"}>
                                 Parent Region:
                             </WCol>
-                            <WCol size={"1"}>
+                            <WCol size={"1"} onClick = {handleReturnToParent} >
 
                                 {
                                     editing ?   <WInput className="edit-parent-region" inputClass="list-item-edit-input"

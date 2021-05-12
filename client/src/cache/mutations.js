@@ -160,6 +160,12 @@ export const SET_SUBREGION_ARRAY = gql`
 	}
 `;
 
+export const CHANGE_SUBREGION_ARRAY = gql`
+	mutation ChangeSubregionArray($linkID: String!,$unlinkID: String!, $subregionID: String!) {
+		changeSubregionArray(linkID: $linkID,unlinkID: $unlinkID, subregionID: $subregionID)
+	}
+`;
+
 
 export const ADD_LANDMARK = gql`
 	mutation AddLandmark($regionID: String!,$landmarkName: String!  , $index: Int! ,$op: Int!) {

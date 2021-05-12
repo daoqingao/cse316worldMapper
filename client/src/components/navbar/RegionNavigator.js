@@ -58,23 +58,28 @@ const RegionNavigator = (props) => {
     let leftDisable=true
     let rightDisable=true
 
-    let parentRegion = allRegion.find(region => region._id===props.activeRegion.parentRegionID)
-    if(parentRegion!==undefined)
-    {
-        let subArr = parentRegion.subregionsID
-        for(let i=0;i<subArr.length;i++){
-            if (subArr[i]===props.activeRegion._id){
 
-                if(subArr[i-1]!==undefined)
-                {
-                    leftDisable=false
+
+    if(allRegion[0]!==undefined)
+    {
+        let parentRegion = allRegion.find(region => region._id===props.activeRegion.parentRegionID)
+            if(parentRegion!==undefined){
+                let subArr = parentRegion.subregionsID
+                for(let i=0;i<subArr.length;i++){
+                    if (subArr[i]===props.activeRegion._id){
+
+                        if(subArr[i-1]!==undefined)
+                        {
+                            leftDisable=false
+                        }
+                        if(subArr[i+1]!==undefined)
+                        {
+                            rightDisable=false
+                        }
+                    }
                 }
-                if(subArr[i+1]!==undefined)
-                {
-                    rightDisable=false
-                }
-            }
-        }
+}
+
     }
 
     const clickDisabled = () => {}
