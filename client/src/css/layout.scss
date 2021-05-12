@@ -31,6 +31,24 @@ html {
     padding: 12px 24px;
 }
 
+.list-text-enable {
+    color:blue;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.125rem;
+    padding: 12px 24px;
+}
+
+.list-text-disable {
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.125rem;
+    padding: 12px 24px;
+}
+
 .list-item-active {
     padding-left: 24px;
     // transform: scale(1);

@@ -104,6 +104,13 @@ const RegionViewerMain = (props) => {
 
     }
 
+    const editDisable= () => {}
+    const parentRegionEditDisable = currentRegionViewer.isRoot;
+    const parRegionStyle = !parentRegionEditDisable ? ' list-text-enable' : 'list-text-disable';
+
+
+    console.log(parentRegionEditDisable)
+
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
@@ -153,7 +160,7 @@ const RegionViewerMain = (props) => {
                                                         name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={currentRegionViewer.parentRegion}
                                         />
                                         :
-                                        <div className='list-text'>
+                                        <div className={`${parRegionStyle}`}>
                                             {currentRegionViewer.parentRegion}
 
                                         </div>
@@ -161,7 +168,7 @@ const RegionViewerMain = (props) => {
 
                             </WCol>
                             <WCol size={"1"}>
-                                <i className="material-icons" onClick={handleEditing}>edit</i>
+                                <i className="material-icons" onClick={parentRegionEditDisable?editDisable:handleEditing}>edit</i>
                             </WCol>
 
                         </WRow>
