@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { WButton, WInput, WRow, WCol } from 'wt-frontend';
+
 
 const TableEntry = (props) => {
     const { data } = props;
@@ -17,9 +18,29 @@ const TableEntry = (props) => {
 
 
 
+
     const [editingRegionName, toggleRegionNameEdit] = useState(false);
     const [editingCapital, toggleCapitalEdit] = useState(false);
     const [editingLeader, toggleLeaderEdit] = useState(false);
+
+    useEffect(() => {
+
+        if(props.editType==="name")
+            if(editingRegionName===false)
+                toggleRegionNameEdit( props.index===props.activeIndex)
+        if(props.editType==="capital")
+                if(editingCapital===false)
+                    toggleCapitalEdit( props.index===props.activeIndex)
+        if(props.editType==="leader")
+            if(editingLeader===false)
+                toggleLeaderEdit( props.index===props.activeIndex)
+    });
+
+
+
+
+
+
 
 
     const disabledButton = () => {}
@@ -31,6 +52,7 @@ const TableEntry = (props) => {
         if(newName !== prevName) {
             props.editSubregion(data._id, 'name', newName, prevName);
         }
+        props.setActiveIndex(-1)
     };
 
 
@@ -41,6 +63,7 @@ const TableEntry = (props) => {
         if(newF  !== prev) {
             props.editSubregion(data._id, 'capital', newF, prev);
         }
+        props.setActiveIndex(-1)
     };
 
     const handleLeaderEdit = (e) => {
@@ -50,17 +73,27 @@ const TableEntry = (props) => {
         if(newF  !== prev) {
             props.editSubregion(data._id, 'leader', newF, prev);
         }
+        props.setActiveIndex(-1)
     };
 
     const handleDeleteSubregion = (e) => {
-
+        console.log("called")
         props.setShowDeleteSubregion(true)
         props.setDeleteID(data._id)
         // props.deleteSubregion(data, props.index)
     }
 
 
+    const handleToggleDownEdit = (type) => {
 
+        props.setActiveIndex(props.index+1)
+        props.setTypeEdit(type)
+    }
+
+    const handleToggleUpEdit = (type) => {
+        props.setActiveIndex(props.index-1)
+        props.setTypeEdit(type)
+    }
 
 
 
@@ -71,7 +104,30 @@ const TableEntry = (props) => {
                     editingRegionName || name === ''
                         ? <WInput
                             className='table-input' onBlur={handleRegionNameEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleRegionNameEdit(e)}}
+                            onKeyDown={(e) => {
+                                if(e.keyCode === 13) handleRegionNameEdit(e)
+                                if(e.keyCode === 39) {
+                                    toggleCapitalEdit(!editingCapital)
+                                    toggleRegionNameEdit(!editingRegionName)
+                                    props.setActiveIndex(-1)
+                                }
+                                if(e.keyCode === 40) {
+
+                                    if(props.entrySize-1!==props.index){
+                                        toggleRegionNameEdit(!editingRegionName)
+                                        handleToggleDownEdit("name")
+                                    }
+
+                                }
+                                if(e.keyCode === 38) {
+                                    if(0!==props.index)
+                                    {
+                                        toggleRegionNameEdit(!editingRegionName)
+                                        handleToggleUpEdit("name")
+                                    }
+                                }
+                                }
+                            }
                             autoFocus={true} defaultValue={name} type='text'
                             inputClass="table-input-class"
                         />
@@ -87,7 +143,35 @@ const TableEntry = (props) => {
                     editingCapital || capital === ''
                         ? <WInput
                             className='table-input' onBlur={handleCapitalEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)}}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)
+                                if(e.keyCode === 39) {
+                                toggleCapitalEdit(!editingCapital)
+                                toggleLeaderEdit(!editingLeader)
+                                    props.setActiveIndex(-1)
+                                }
+                                if(e.keyCode === 37) {
+
+                                    toggleCapitalEdit(!editingCapital)
+                                    toggleRegionNameEdit(!editingRegionName)
+                                    props.setActiveIndex(-1)
+                                }
+
+                                if(e.keyCode === 40) {
+                                    if(props.entrySize-1!==props.index)
+                                    {
+                                        toggleCapitalEdit(!editingCapital)
+                                        handleToggleDownEdit("capital")
+                                    }
+                                }
+                                if(e.keyCode === 38) {
+                                    if(0!==props.index){
+                                        toggleCapitalEdit(!editingCapital)
+                                        handleToggleUpEdit("capital")
+                                    }
+
+                                }
+
+                            }}
                             autoFocus={true} defaultValue={capital} type='text'
                             inputClass="table-input-class"
                         />
@@ -104,7 +188,29 @@ const TableEntry = (props) => {
                     editingLeader|| leader === ''
                         ? <WInput
                             className='table-input' onBlur={handleLeaderEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)
+                                if(e.keyCode === 37) {
+                                    toggleCapitalEdit(!editingCapital)
+                                    toggleLeaderEdit(!editingLeader)
+                                    props.setActiveIndex(-1)
+                                }
+
+                                if(e.keyCode === 40) {
+                                    if(props.entrySize-1!==props.index){
+                                        toggleLeaderEdit(!editingLeader)
+                                        handleToggleDownEdit("leader")
+                                    }
+
+                                }
+                                if(e.keyCode === 38) {
+                                    if(0!==props.index){
+                                        toggleLeaderEdit(!editingLeader)
+                                        handleToggleUpEdit("leader")
+                                    }
+                                }
+
+
+                            }}
                             autoFocus={true} defaultValue={leader} type='text'
                             inputClass="table-input-class"
                         />

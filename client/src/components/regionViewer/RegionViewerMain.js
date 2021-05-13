@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
 import {WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WMMain, WLFooter, WInput, WButton} from 'wt-frontend';
 import RegionViewerLandmarkTable from "./RegionViewerLandmarkTable";
+import flag from "../icons/The World/Alaska Flag.png";
+
+
 
 const RegionViewerMain = (props) => {
+
 
     let regionViewerID = props.regionViewerID
     let allRegions = props.allRegions
@@ -133,7 +137,9 @@ const RegionViewerMain = (props) => {
                     <WCol size="5">
 
                             <WCol size={"6"}>
-                                <i className="material-icons another" >public</i>
+                                <img width="200"
+                                     src={flag} ></img>
+
                             </WCol>
 
 

@@ -54,8 +54,10 @@ const MapScreen = (props) => {
             <WCol size="6">
                 <WRow size="6">
                     <div className="centerGlobe" >
-                        <img width="200"
-                             src={globe} ></img>
+                        <i className="material-icons another" >public</i>
+                        {/*<img width="200"*/}
+                        {/*     src={globe} ></img>*/}
+
                     </div>
                 </WRow>
 

@@ -40,6 +40,12 @@ const TableContents = (props) => {
         )
     }
 
+
+    const [activeEditIndex, setActiveIndex] = useState(-1);
+    const [editTypeField, setTypeEdit] = useState("");
+
+
+
     return (
         entries !== undefined && entries.length > 0 ? <div className=' table-entries container-primary'>
             {
@@ -60,6 +66,16 @@ const TableContents = (props) => {
                         setShowDeleteSubregion = {props.toggleShowDeleteSubregion}
                         showDeleteSubregion={props.showDeleteSubregion}
                         setDeleteID = {setDeleteID}
+
+                        editType={editTypeField}
+                        setTypeEdit={setTypeEdit}
+
+                        activeIndex={activeEditIndex}
+                        setActiveIndex={setActiveIndex}
+                        entrySize={entries.length}
+
+
+
 
                     />
                 ))
