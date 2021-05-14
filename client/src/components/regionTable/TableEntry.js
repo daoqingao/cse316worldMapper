@@ -95,6 +95,10 @@ const TableEntry = (props) => {
         props.setTypeEdit(type)
     }
 
+    var path = process.env.PUBLIC_URL;
+    var image = "/"+name +" Flag.png";
+
+
 
 
     return (
@@ -223,8 +227,13 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 {
-                    <div className="table-text" onClick={ () => props.changeRegion(data._id)}>
-                        {flag}
+                    <div className="table-text" onClick = {() => {
+                        props.changeRegion(data._id)
+                        props.showRegionViewer(data._id)
+
+                    }}>
+                        <img width="35"
+                             src={path+image} ></img>
                     </div>
 
                 }

@@ -8,6 +8,7 @@ import flag from "../icons/The World/Alaska Flag.png";
 const RegionViewerMain = (props) => {
 
 
+
     let regionViewerID = props.regionViewerID
     let allRegions = props.allRegions
 
@@ -115,6 +116,27 @@ const RegionViewerMain = (props) => {
 
     console.log(parentRegionEditDisable)
 
+    var path = process.env.PUBLIC_URL;
+    var image = "/"+currentRegionViewer.name +" Flag.png";
+    var fullPath=path + image
+
+    let validImage=false
+    const fs = require('fs')
+
+
+    const tryRequire = (path) => {
+        try {
+            return require(`${path}`);
+        } catch (err) {
+            return null;
+        }
+    };
+
+    console.log(fullPath)
+    console.log(tryRequire(fullPath))
+
+
+
     return (
         <WLayout wLayout={"header"} className = "regionViewer">
             <WLHeader>
@@ -138,7 +160,7 @@ const RegionViewerMain = (props) => {
 
                             <WCol size={"6"}>
                                 <img width="200"
-                                     src={flag} ></img>
+    src={path + image}                                />
 
                             </WCol>
 
