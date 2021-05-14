@@ -235,6 +235,11 @@ html {
     padding: 23px 24px 24px 24px !important;
 }
 
+.parent-edit-input {
+    font-size: 9px;
+    width: 25%;
+}
+
 .table-input, .table-select {
     height: 100%;
     display: flex;
@@ -251,5 +256,18 @@ html {
 .edit-parent-region {
 
     width: 200%;
+
+}
+
+.parent-region {
+    color:lightblue;
+}
+
+.parent-region:hover {
+    cursor:pointer;
+}
+
+.parent-region-disable {
+
 
 }

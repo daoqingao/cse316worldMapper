@@ -80,6 +80,10 @@ html, body {
     font-weight: bold;
 
 }
+.list-item-active:hover{
+cursor: pointer;
+
+}
 
 .list-item {
     cursor: pointer;
@@ -103,7 +107,10 @@ html, body {
     font-family: "Roboto Mono", monospace;
     text-transform: uppercase;
     font-weight: bold;
-} 
+}
+.logo:hover{
+    cursor:pointer
+}
 
 .modal-error {
     color: $primary-color;
@@ -291,17 +298,13 @@ float:right;
 }
 
 .navEntry{
-
     float: left;
     flex-direction: column;
     background: black;
     color:white;
-
 }
 
 .navEntryBox{
-
-
     background: black;
     color:white;
 
@@ -317,4 +320,24 @@ float:right;
     width: 250%;
     background: black;
     color:white;
+}
+
+.editParent{
+
+    width:180%;
+    height: 20%;
+    font-size: 9px;
+
+
+    flex-direction: column;
+    background: black;
+    color:white;
+}
+
+
+.editParentPen{
+    padding-left: 25px;
+    font-size: 16px;
+    height: 20%;
+
 }

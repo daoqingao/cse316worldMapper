@@ -111,7 +111,7 @@ const RegionViewerMain = (props) => {
 
     const editDisable= () => {}
     const parentRegionEditDisable = currentRegionViewer.isRoot;
-    const parRegionStyle = !parentRegionEditDisable ? ' list-text-enable' : 'list-text-disable';
+    const parRegionStyle = !parentRegionEditDisable ? 'parent-region' : 'parent-region-disable';
 
 
     console.log(parentRegionEditDisable)
@@ -180,23 +180,27 @@ const RegionViewerMain = (props) => {
                             <WCol size={"3"}>
                                 Parent Region:
                             </WCol>
-                            <WCol size={"1"} onClick = {handleReturnToParent} >
+
+                            <WCol size={"1"} className="editParentContainer" onClick = {handleReturnToParent} >
 
                                 {
-                                    editing ?   <WInput className="edit-parent-region" inputClass="list-item-edit-input"
+                                    editing ?   <WInput className="editParent" inputClass="parent-edit-input"
                                                         onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
                                                         name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={currentRegionViewer.parentRegion}
                                         />
                                         :
                                         <div className={`${parRegionStyle}`}>
-                                            {currentRegionViewer.parentRegion}
+                                            <u>
+                                                {currentRegionViewer.parentRegion}
+                                            </u>
 
                                         </div>
                                 }
 
                             </WCol>
-                            <WCol size={"1"}>
-                                <i className="material-icons" onClick={parentRegionEditDisable?editDisable:handleEditing}>edit</i>
+
+                            <WCol size={"1"} className="editParentPen">
+                                <i className="material-icons editParentPen" onClick={parentRegionEditDisable?editDisable:handleEditing}>edit</i>
                             </WCol>
 
                         </WRow>
