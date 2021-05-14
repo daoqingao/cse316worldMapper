@@ -267,12 +267,7 @@ float:right;
 
 }
 
-.create-map{
-    display: block;
-    width: 100%;
-    background: black;
-    color:white;
-}
+
 
 .fillUpButton{
     width:100%
@@ -293,4 +288,33 @@ float:right;
     font-size: 1.375rem;
     font-weight: bold;
     color: $text-color;
+}
+
+.navEntry{
+
+    float: left;
+    flex-direction: column;
+    background: black;
+    color:white;
+
+}
+
+.navEntryBox{
+
+
+    background: black;
+    color:white;
+
+}
+
+.chevRight{
+    background: black;
+    float: right;
+}
+
+.create-map{
+    display: block;
+    width: 250%;
+    background: black;
+    color:white;
 }

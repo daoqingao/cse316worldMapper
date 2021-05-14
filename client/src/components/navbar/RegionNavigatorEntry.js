@@ -1,5 +1,6 @@
 import React from 'react';
-import {WButton, WNavItem} from "wt-frontend";
+import { WNavItem} from "wt-frontend";
+import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WButton} from 'wt-frontend';
 import MainRegionTable from "../regionTable/MainRegionTable";
 
 const RegionNavigatorEntry = (props) => {
@@ -13,17 +14,34 @@ const RegionNavigatorEntry = (props) => {
         props.changeRegion(region._id)
     }
     return (
-        <WNavItem>
-            <WButton className="create-map" shape="pill"
-                     hoverAnimation="darken"
-                     clickAnimation="ripple-light"
-                     onClick = {() => handleChangeRegion()}>
-                {region.name}
-            </WButton>
-            {
-                props.isLast && (<i className="material-icons" >chevron_right</i>)
-            }
-        </WNavItem>
+        <div>
+            <WNavItem className={"navEntryBox"} >
+
+
+        <WButton
+            className={"navEntry"}
+            shape="pill"
+                   hoverAnimation="darken"
+                   clickAnimation="ripple-light"
+                   onClick = {() => handleChangeRegion()}>
+            {region.name}
+
+        </WButton>
+
+        {
+            props.isLast && (<i className="material-icons chevRight" >chevron_right</i>)
+        }
+
+
+
+            </WNavItem>
+
+
+
+        </div>
+
+
+
     );
 };
 
