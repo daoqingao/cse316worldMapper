@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WMMain, WLFooter, WInput, WButton} from 'wt-frontend';
 import RegionViewerLandmarkTable from "./RegionViewerLandmarkTable";
-import flag from "../icons/The World/Alaska Flag.png";
 
 
 
